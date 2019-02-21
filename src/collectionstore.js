@@ -20,8 +20,8 @@
  *
  */
 
-const Vue = require('vue');
- import service from './collectionservice'
+import Vue from 'vue'
+import service from './collectionservice'
 
 const CollectionStoreModule = {
 	state: {

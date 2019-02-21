@@ -4,10 +4,12 @@ import localResolve from 'rollup-plugin-node-resolve';
 import scss from 'rollup-plugin-scss';
 import commonjs from 'rollup-plugin-commonjs';
 import json from "rollup-plugin-json";
-import replace from 'rollup-plugin-replace';
 import alias from 'rollup-plugin-alias';
+import terser from 'rollup-plugin-terser';
 const path = require('path');
 const cwd = process.cwd()
+
+const isProduction = process.env.NODE_ENV === 'production';
 
 export default {
 	input: 'src/index.js', 
@@ -34,12 +36,10 @@ export default {
 			extensions: ['.js', '.vue'],
 		}),
 		json(),
-		replace({
-			SCOPE_VERSION: 'abc123'
-		}),
 		alias({
 			resolve: ['.js', '/index.js'],
 		}),
 		commonjs(),
+		isProduction && terser.terser()
 	],
 };
