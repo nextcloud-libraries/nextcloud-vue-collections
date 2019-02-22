@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<ul v-if="collections" id="shareWithList" class="shareWithList">
+	<ul v-if="collections && type && id" id="shareWithList" class="shareWithList">
 		<li @click="showSelect">
 			<div class="avatar">
 				<span class="icon-category-integration icon-white" />
@@ -117,7 +117,24 @@ export default {
 		Multiselect: NextcloudVue.Multiselect
 	},
 	props: {
+		/**
+		 * Resource type identifier
+		 */
 		'type': {
+			type: String,
+			default: null
+		},
+		/**
+		 * Unique id of the resource
+		 */
+		'id': {
+			type: String,
+			default: null
+		},
+		/**
+		 * Name of the resource
+		 */
+		'name': {
 			type: String,
 			default: ''
 		}
@@ -134,7 +151,7 @@ export default {
 	},
 	computed: {
 		collections() {
-			return this.$store.getters.collectionsByResource(this.type, this.$root.model.id)
+			return this.$store.getters.collectionsByResource(this.type, this.id)
 		},
 		placeholder() {
 			return t('files_sharing', 'Add to a collection')
@@ -166,7 +183,7 @@ export default {
 	mounted() {
 		this.$store.dispatch('fetchCollectionsByResource', {
 			resourceType: this.type,
-			resourceId: this.$root.model.id
+			resourceId: this.id
 		})
 	},
 	methods: {
@@ -175,10 +192,10 @@ export default {
 				selectedOption.action().then((id) => {
 					this.$store.dispatch('createCollection', {
 						baseResourceType: this.type,
-						baseResourceId: this.$root.model.id,
+						baseResourceId: this.id,
 						resourceType: selectedOption.type,
 						resourceId: id,
-						name: this.$root.model.name
+						name: this.name
 					})
 				}).catch((e) => {
 					console.error('No resource selected', e)
@@ -187,7 +204,7 @@ export default {
 
 			if (selectedOption.method === METHOD_ADD_TO_COLLECTION) {
 				this.$store.dispatch('addResourceToCollection', {
-					collectionId: selectedOption.collectionId, resourceType: this.type, resourceId: this.$root.model.id
+					collectionId: selectedOption.collectionId, resourceType: this.type, resourceId: this.id
 				})
 			}
 		},
