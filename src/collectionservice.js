@@ -21,7 +21,7 @@
  */
 
 const axios = require('nextcloud-axios').default;
-console.log(axios);
+
 class CollectionService {
 
 	constructor() {
@@ -49,6 +49,9 @@ class CollectionService {
 				return result.data.ocs.data
 			})
 			.catch(error => {
+				if (error.response.status === 404) {
+					return [];
+				}
 				console.error(error)
 				return Promise.reject(error)
 			})

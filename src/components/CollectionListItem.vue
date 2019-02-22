@@ -32,7 +32,7 @@
 		</form>
 		<transition name="fade">
 			<div v-if="!detailsOpen" class="linked-icons">
-				<a v-for="resource in collection.resources" :key="resource.id" v-tooltip="resource.name"
+				<a v-for="resource in collection.resources" :key="resource.type + '|' + resource.id" v-tooltip="resource.name"
 					:href="resource.link"><span :class="getIcon(resource)" /></a>
 			</div>
 		</transition>
@@ -48,7 +48,7 @@
 		</span>
 		<transition name="fade">
 			<ul v-if="detailsOpen" class="resource-list-details">
-				<li v-for="resource in collection.resources" :key="resource.id">
+				<li v-for="resource in collection.resources" :key="resource.type + '|' + resource.id">
 					<a :href="resource.link"><span :class="getIcon(resource)" /><span class="resource-name">{{ resource.name || '' }}</span></a>
 					<span class="icon-close" @click="removeResource(collection, resource)" />
 				</li>

@@ -96,13 +96,21 @@
 </style>
 
 <script>
+
+import Vue from 'vue';
+import Vuex from 'vuex';
 const NextcloudVue = require('nextcloud-vue');
+Vue.use(Vuex);
 import CollectionListItem from '../components/CollectionListItem'
+import { CollectionStoreModule } from '../collectionstore'
+
+const store = new Vuex.Store(CollectionStoreModule);
 
 const METHOD_CREATE_COLLECTION = 0
 const METHOD_ADD_TO_COLLECTION = 1
 export default {
 	name: 'CollectionList',
+	store,
 	components: {
 		CollectionListItem,
 		Avatar: NextcloudVue.Avatar,
