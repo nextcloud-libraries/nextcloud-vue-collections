@@ -7,9 +7,9 @@
 		"nextcloud",
 		"components"
 	],
-	"repository": "https://github.com/nextcloud/nextcloud-vue-collections",
-	"homepage": "https://github.com/nextcloud/nextcloud-vue-collections",
-	"bugs": "https://github.com/nextcloud/nextcloud-vue-collections/issues",
+	"repository": "https://github.com/juliushaertl/nextcloud-vue-collections",
+	"homepage": "https://github.com/juliushaertl/nextcloud-vue-collections",
+	"bugs": "https://github.com/juliushaertl/nextcloud-vue-collections/issues",
 	"author": "Julius Härtl <jus@bitgrid.net>",
 	"license": "AGPL-3.0",
 	"scripts": {
