@@ -3,26 +3,19 @@ workflow "Build, Test, and Publish" {
   on = "release"
 }
 
-action "Build" {
+action "Install" {
   uses = "actions/npm@master"
   args = "install"
 }
 
-action "Test" {
-  needs = "Build"
+action "Build" {
+  needs = "Install"
   uses = "actions/npm@master"
   args = "run build"
 }
 
-# Filter for master branch
-action "Master" {
-  needs = "Test"
-  uses = "actions/bin/filter@master"
-  args = "branch master"
-}
-
 action "Publish" {
-  needs = "Master"
+  needs = "Build"
   uses = "actions/npm@master"
   args = "publish --access public"
   secrets = ["NPM_AUTH_TOKEN"]
