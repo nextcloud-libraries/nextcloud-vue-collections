@@ -1,12 +1,16 @@
 # Nextcloud Vue component for collaboration collections
 
-# Installation
+[![Build Status](https://travis-ci.org/juliushaertl/nextcloud-vue-collections.svg?branch=master)](https://travis-ci.org/juliushaertl/nextcloud-vue-collections) [![npm last version](https://img.shields.io/npm/v/nextcloud-vue-collections.svg?style=flat-square)](https://www.npmjs.com/package/nextcloud-vue-collections) [![Dependabot status](https://img.shields.io/badge/Dependabot-enabled-brightgreen.svg?longCache=true&style=flat-square&logo=dependabot)](https://dependabot.com) [![irc](https://img.shields.io/badge/IRC-%23nextcloud--dev%20on%20freenode-blue.svg?style=flat-square)](https://webchat.freenode.net/?channels=nextcloud-dev)
+
+
+## Installation
 
 ```sh
 npm install --save nextcloud-vue-collections
 ```
 
-# Usage
+
+## Usage
 
 This library requires your app to have the following dependencies installed:
 
