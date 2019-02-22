@@ -58,7 +58,7 @@
 </template>
 
 <script>
-const NextcloudVue = require('nextcloud-vue');
+import NextcloudVue from 'nextcloud-vue'
 
 export default {
 	name: 'CollectionListItem',

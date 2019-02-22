@@ -97,14 +97,15 @@
 
 <script>
 
-import Vue from 'vue';
-import Vuex from 'vuex';
-const NextcloudVue = require('nextcloud-vue');
-Vue.use(Vuex);
+import Vue from 'vue'
+import Vuex from 'vuex'
 import CollectionListItem from '../components/CollectionListItem'
 import { CollectionStoreModule } from '../collectionstore'
+import NextcloudVue from 'nextcloud-vue'
 
-const store = new Vuex.Store(CollectionStoreModule);
+Vue.use(Vuex)
+
+const store = new Vuex.Store(CollectionStoreModule)
 
 const METHOD_CREATE_COLLECTION = 0
 const METHOD_ADD_TO_COLLECTION = 1

@@ -20,7 +20,7 @@
  *
  */
 
-const axios = require('nextcloud-axios').default;
+import axios from 'nextcloud-axios'
 
 class CollectionService {
 
@@ -50,7 +50,7 @@ class CollectionService {
 			})
 			.catch(error => {
 				if (error.response.status === 404) {
-					return [];
+					return []
 				}
 				console.error(error)
 				return Promise.reject(error)
