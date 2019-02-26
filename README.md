@@ -26,7 +26,12 @@ After that you can use the collection list component like this:
 
 ```vue
 <template>
-	<collection-list v-if="resourceId" type="myresourcetype" :id="resourceId" :name="resourceName"></collection-list>
+	<collection-list 
+		v-if="resourceId" 
+		type="myresourcetype" 
+		:id="resourceId" 
+		:name="resourceName" 
+	/>
 </template>
 
 <script>
