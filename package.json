@@ -31,7 +31,7 @@
 	],
 	"dependencies": {
 		"nextcloud-axios": "^0.1.2",
-		"nextcloud-vue": "^0.7.0",
+		"nextcloud-vue": "^0.8.0",
 		"v-tooltip": "^2.0.0-rc.33",
 		"vue": "^2.6.6",
 		"vue-click-outside": "^1.0.7",
