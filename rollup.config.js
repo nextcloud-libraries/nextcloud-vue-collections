@@ -13,7 +13,13 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 export default {
 	input: 'src/index.js', 
-	external: ['vue', 'vuex', 'axios', 'nextcloud-vue', 'nextcloud-axios', 'v-tooltip'],
+	external: (id) => {
+		const externals = ['vue', 'vuex', 'axios', 'nextcloud-vue', 'nextcloud-axios']
+		if (externals.includes(id)) {
+			return true;
+		}
+		return /nextcloud-vue\/dist/.test(id)
+	},
 	output: {
 		file: 'dist/nextcloud-vue-collections.js',
 		format: 'esm'
