@@ -101,8 +101,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import CollectionListItem from '../components/CollectionListItem'
 import { CollectionStoreModule } from '../collectionstore'
-import NextcloudVue from 'nextcloud-vue'
-
+import Avatar from 'nextcloud-vue/dist/Components/Avatar'
+import Multiselect from 'nextcloud-vue/dist/Components/Multiselect'
 Vue.use(Vuex)
 
 const store = new Vuex.Store(CollectionStoreModule)
@@ -114,8 +114,8 @@ export default {
 	store,
 	components: {
 		CollectionListItem,
-		Avatar: NextcloudVue.Avatar,
-		Multiselect: NextcloudVue.Multiselect
+		Avatar: Avatar,
+		Multiselect: Multiselect
 	},
 	props: {
 		/**

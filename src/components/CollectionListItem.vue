@@ -58,13 +58,15 @@
 </template>
 
 <script>
-import NextcloudVue from 'nextcloud-vue'
+import Avatar from 'nextcloud-vue/dist/Components/Avatar'
+import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
 
 export default {
 	name: 'CollectionListItem',
 	components: {
-		Avatar: NextcloudVue.Avatar
+		Avatar: Avatar
 	},
+	directives: [Tooltip],
 	props: {
 		collection: {
 			type: Object,
