@@ -23,7 +23,7 @@
 <template>
 	<li v-click-outside="hideDetails" class="collection-list">
 		<avatar :display-name="collection.name" :allow-placeholder="true" />
-		<span v-if="newName === ''" class="username" title=""
+		<span v-if="newName === null" class="username" title=""
 			@click="showDetails">{{ collection.name }}</span>
 		<form v-else @submit.prevent="renameCollection">
 			<input v-model="newName" type="text" autocomplete="off"
@@ -33,7 +33,7 @@
 		<transition name="fade">
 			<div v-if="!detailsOpen" class="linked-icons">
 				<a v-for="resource in collection.resources" :key="resource.type + '|' + resource.id" v-tooltip="resource.name"
-					:href="resource.link"><span :class="getIcon(resource)" /></a>
+					:href="resource.link"><img :src="iconUrl(resource)"></a>
 			</div>
 		</transition>
 
@@ -49,7 +49,7 @@
 		<transition name="fade">
 			<ul v-if="detailsOpen" class="resource-list-details">
 				<li v-for="resource in collection.resources" :key="resource.type + '|' + resource.id">
-					<a :href="resource.link"><span :class="getIcon(resource)" /><span class="resource-name">{{ resource.name || '' }}</span></a>
+					<a :href="resource.link"><img :src="iconUrl(resource)"><span class="resource-name">{{ resource.name || '' }}</span></a>
 					<span class="icon-close" @click="removeResource(collection, resource)" />
 				</li>
 			</ul>
@@ -66,7 +66,7 @@ export default {
 	components: {
 		Avatar: Avatar
 	},
-	directives: [Tooltip],
+	directives: { Tooltip },
 	props: {
 		collection: {
 			type: Object,
@@ -77,7 +77,7 @@ export default {
 		return {
 			isOpen: false,
 			detailsOpen: false,
-			newName: ''
+			newName: null
 		}
 	},
 	computed: {
@@ -86,11 +86,11 @@ export default {
 			return [
 				{
 					action: () => {
-						this.detailsOpen = true
+						this.detailsOpen = !this.detailsOpen
 						this.isOpen = false
 					},
 					icon: 'icon-info',
-					text: t('files_sharing', 'Details')
+					text: !this.detailsOpen ? t('files_sharing', 'Show details') : t('files_sharing', 'Hide details')
 				},
 				{
 					action: () => this.openRename(),
@@ -101,6 +101,17 @@ export default {
 		},
 		getIcon() {
 			return (resource) => [resource.iconClass]
+		},
+		iconUrl() {
+			return (resource) => {
+				if (resource.mimetype) {
+					return OC.MimeType.getIconUrl(resource.mimetype)
+				}
+				if (resource.iconUrl) {
+					return resource.iconUrl
+				}
+				return ''
+			}
 		}
 	},
 	methods: {
@@ -132,7 +143,7 @@ export default {
 				collectionId: this.collection.id,
 				name: this.newName
 			}).then((collection) => {
-				this.newName = ''
+				this.newName = null
 			})
 		}
 	}
@@ -149,8 +160,9 @@ export default {
 	}
 	.linked-icons {
 		display: flex;
-		span {
-			padding: 16px;
+		img {
+			padding: 6px;
+			height: 32px;
 			display: block;
 			background-repeat: no-repeat;
 			background-position: center;
@@ -163,11 +175,15 @@ export default {
 	.collection-list {
 		flex-wrap: wrap;
 		height: auto;
+		cursor: pointer;
 
 		form, .username {
 			flex-basis: 10%;
 			flex-grow: 1;
 			display: flex;
+		}
+		input[type=text] {
+			flex-grow: 1;
 		}
 		.resource-list-details {
 			flex-basis: 100%;
@@ -176,6 +192,7 @@ export default {
 				display: flex;
 				margin-left: 44px;
 				border-radius: 3px;
+				cursor: pointer;
 
 				&:hover {
 					background-color: var(--color-background-dark);
@@ -199,6 +216,17 @@ export default {
 				vertical-align: top;
 				white-space: nowrap;
 				flex-grow: 1;
+				padding: 4px;
+			}
+			img {
+				width: 24px;
+				height: 24px;
+			}
+			.icon-close {
+				opacity: .7;
+				&:hover, &:focus {
+					opacity: 1;
+				}
 			}
 		}
 	}
