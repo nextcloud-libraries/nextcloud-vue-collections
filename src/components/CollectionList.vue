@@ -64,6 +64,10 @@
 		}
 	}
 
+	div.avatar {
+		background-color: var(--color-primary);
+	}
+
 	/** TODO provide white icon in core */
 	.icon-category-integration.icon-white {
 		filter: invert(100%);
@@ -71,6 +75,7 @@
 		display: block;
 		background-repeat: no-repeat;
 		background-position: center;
+		background-image: var(--icon-integration-000);
 	}
 
 	.option__wrapper {
