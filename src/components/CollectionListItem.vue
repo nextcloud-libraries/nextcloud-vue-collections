@@ -32,15 +32,14 @@
 		</form>
 		<transition name="fade">
 			<div v-if="!detailsOpen" class="linked-icons">
-				<a v-for="resource in collection.resources" :key="resource.type + '|' + resource.id" v-tooltip="resource.name"
-					:href="resource.link"><img :src="iconUrl(resource)"></a>
+				<a v-for="resource in limitedResources(collection)" :key="resource.type + '|' + resource.id" v-tooltip="resource.name"
+					:href="resource.link" :class="typeClass(resource)"><img :src="iconUrl(resource)"></a>
 			</div>
 		</transition>
 
 		<span class="sharingOptionsGroup">
 			<div v-click-outside="close" class="share-menu">
-				<a href="#" class="icon icon-more" @click="toggle" />
-				<span class="icon icon-loading-small hidden" />
+				<a href="#" class="icon icon-more" @click.prevent="toggle" />
 				<div class="popovermenu" :class="{open: isOpen}">
 					<popover-menu :menu="menu" />
 				</div>
@@ -48,7 +47,7 @@
 		</span>
 		<transition name="fade">
 			<ul v-if="detailsOpen" class="resource-list-details">
-				<li v-for="resource in collection.resources" :key="resource.type + '|' + resource.id">
+				<li v-for="resource in collection.resources" :key="resource.type + '|' + resource.id" :class="typeClass(resource)">
 					<a :href="resource.link"><img :src="iconUrl(resource)"><span class="resource-name">{{ resource.name || '' }}</span></a>
 					<span class="icon-close" @click="removeResource(collection, resource)" />
 				</li>
@@ -101,6 +100,12 @@ export default {
 		},
 		getIcon() {
 			return (resource) => [resource.iconClass]
+		},
+		typeClass() {
+			return (resource) => 'resource-type-' + resource.type
+		},
+		limitedResources() {
+			return (collection) => collection.resources ? collection.resources.slice(0, 2) : []
 		},
 		iconUrl() {
 			return (resource) => {
@@ -170,6 +175,20 @@ export default {
 			&:hover {
 				opacity: 1;
 			}
+		}
+	}
+	.share-menu {
+		position: relative;
+		display: block;
+		.icon-more {
+			width: 44px;
+			height: 34px;
+		}
+	}
+	.popovermenu {
+		display: none;
+		&.open {
+			display: block;
 		}
 	}
 	.collection-list {

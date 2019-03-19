@@ -49,6 +49,9 @@
 </template>
 
 <style lang="scss" scoped>
+	#shareWithList li {
+		font-weight: 300;
+	}
 	.multiselect {
 		width: 100%;
 		margin-left: 3px;
