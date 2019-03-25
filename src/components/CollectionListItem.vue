@@ -21,9 +21,9 @@
   -->
 
 <template>
-	<li class="collection-list">
+	<li class="collection-list-item">
 		<avatar :display-name="collection.name" :allow-placeholder="true" class="collection-avatar" />
-		<span v-if="newName === null" class="username" title=""
+		<span v-if="newName === null" class="collection-item-name" title=""
 			@click="showDetails">{{ collection.name }}</span>
 		<form v-else @submit.prevent="renameCollection">
 			<input v-model="newName" type="text" autocomplete="off"
@@ -181,7 +181,7 @@ export default {
 			display: block;
 		}
 	}
-	li.collection-list {
+	li.collection-list-item {
 		flex-wrap: wrap;
 		height: auto;
 		cursor: pointer;
@@ -190,12 +190,12 @@ export default {
 		.collection-avatar {
 			margin-top: 6px;
 		}
-		form, .username {
+		form, .collection-item-name {
 			flex-basis: 10%;
 			flex-grow: 1;
 			display: flex;
 		}
-		.username {
+		.collection-item-name {
 			padding: 12px 9px;
 		}
 		input[type=text] {

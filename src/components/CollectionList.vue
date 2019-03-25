@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<ul v-if="collections && type && id" id="shareWithList" class="shareWithList">
+	<ul v-if="collections && type && id" id="collection-list" class="collection-list">
 		<li @click="showSelect">
 			<div class="avatar">
 				<span class="icon-category-integration icon-white" />
@@ -49,7 +49,7 @@
 </template>
 
 <style lang="scss" scoped>
-	.shareWithList > li {
+	.collection-list > li {
 		font-weight: 300;
 		display: flex;
 	}
@@ -100,7 +100,7 @@
 </style>
 <style lang="scss">
 	/** TODO check why this doesn't work when scoped */
-	.shareWithList .multiselect:not(.multiselect--active ) .multiselect__tags {
+	.collection-list .multiselect:not(.multiselect--active ) .multiselect__tags {
 		border: none !important;
 		input::placeholder {
 			color: var(--color-main-text);
