@@ -49,8 +49,9 @@
 </template>
 
 <style lang="scss" scoped>
-	#shareWithList li {
+	.shareWithList > li {
 		font-weight: 300;
+		display: flex;
 	}
 	.multiselect {
 		width: 100%;
@@ -69,12 +70,16 @@
 
 	div.avatar {
 		background-color: var(--color-primary);
+		width: 32px;
+		height: 32px;
+		padding: 8px;
+		margin-bottom: 6px;
 	}
 
 	/** TODO provide white icon in core */
 	.icon-category-integration.icon-white {
 		filter: invert(100%);
-		padding: 16px;
+		padding: 8px;
 		display: block;
 		background-repeat: no-repeat;
 		background-position: center;

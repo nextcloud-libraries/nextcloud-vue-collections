@@ -21,8 +21,8 @@
   -->
 
 <template>
-	<li v-click-outside="hideDetails" class="collection-list">
-		<avatar :display-name="collection.name" :allow-placeholder="true" />
+	<li class="collection-list">
+		<avatar :display-name="collection.name" :allow-placeholder="true" class="collection-avatar" />
 		<span v-if="newName === null" class="username" title=""
 			@click="showDetails">{{ collection.name }}</span>
 		<form v-else @submit.prevent="renameCollection">
@@ -38,12 +38,7 @@
 		</transition>
 
 		<span class="sharingOptionsGroup">
-			<div v-click-outside="close" class="share-menu">
-				<a href="#" class="icon icon-more" @click.prevent="toggle" />
-				<div class="popovermenu" :class="{open: isOpen}">
-					<popover-menu :menu="menu" />
-				</div>
-			</div>
+			<action :actions="menu" />
 		</span>
 		<transition name="fade">
 			<ul v-if="detailsOpen" class="resource-list-details">
@@ -57,13 +52,15 @@
 </template>
 
 <script>
+import Action from 'nextcloud-vue/dist/Components/Action'
 import Avatar from 'nextcloud-vue/dist/Components/Avatar'
 import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
 
 export default {
 	name: 'CollectionListItem',
 	components: {
-		Avatar: Avatar
+		Avatar: Avatar,
+		Action
 	},
 	directives: { Tooltip },
 	props: {
@@ -166,8 +163,8 @@ export default {
 	.linked-icons {
 		display: flex;
 		img {
-			padding: 6px;
-			height: 32px;
+			padding: 12px;
+			height: 44px;
 			display: block;
 			background-repeat: no-repeat;
 			background-position: center;
@@ -177,31 +174,32 @@ export default {
 			}
 		}
 	}
-	.share-menu {
-		position: relative;
-		display: block;
-		.icon-more {
-			width: 44px;
-			height: 34px;
-		}
-	}
+
 	.popovermenu {
 		display: none;
 		&.open {
 			display: block;
 		}
 	}
-	.collection-list {
+	li.collection-list {
 		flex-wrap: wrap;
 		height: auto;
 		cursor: pointer;
+		margin-bottom: 0 !important;
 
+		.collection-avatar {
+			margin-top: 6px;
+		}
 		form, .username {
 			flex-basis: 10%;
 			flex-grow: 1;
 			display: flex;
 		}
+		.username {
+			padding: 12px 9px;
+		}
 		input[type=text] {
+			margin-top: 4px;
 			flex-grow: 1;
 		}
 		.resource-list-details {
