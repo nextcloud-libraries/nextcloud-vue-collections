@@ -25,21 +25,24 @@
 		<avatar :display-name="collection.name" :allow-placeholder="true" class="collection-avatar" />
 		<span v-if="newName === null" class="collection-item-name" title=""
 			@click="showDetails">{{ collection.name }}</span>
-		<form v-else @submit.prevent="renameCollection">
+		<form v-else :class="{'shouldshake': error.rename }" @submit.prevent="renameCollection">
 			<input v-model="newName" type="text" autocomplete="off"
 				autocapitalize="off">
 			<input type="submit" value="" class="icon-confirm">
 		</form>
-		<transition name="fade">
-			<div v-if="!detailsOpen" class="linked-icons">
-				<a v-for="resource in limitedResources(collection)" :key="resource.type + '|' + resource.id" v-tooltip="resource.name"
-					:href="resource.link" :class="typeClass(resource)"><img :src="iconUrl(resource)"></a>
-			</div>
-		</transition>
+		<div v-if="!detailsOpen && newName === null" class="linked-icons">
+			<a v-for="resource in limitedResources(collection)" :key="resource.type + '|' + resource.id" v-tooltip="resource.name"
+				:href="resource.link" :class="typeClass(resource)"><img :src="iconUrl(resource)"></a>
+		</div>
 
-		<span class="sharingOptionsGroup">
+		<span v-if="newName === null" class="sharingOptionsGroup">
 			<action :actions="menu" />
 		</span>
+		<transition name="fade">
+			<div v-if="error.rename" class="error">
+				{{ error.rename }}
+			</div>
+		</transition>
 		<transition name="fade">
 			<ul v-if="detailsOpen" class="resource-list-details">
 				<li v-for="resource in collection.resources" :key="resource.type + '|' + resource.id" :class="typeClass(resource)">
@@ -52,6 +55,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import Action from 'nextcloud-vue/dist/Components/Action'
 import Avatar from 'nextcloud-vue/dist/Components/Avatar'
 import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
@@ -73,7 +77,8 @@ export default {
 		return {
 			isOpen: false,
 			detailsOpen: false,
-			newName: null
+			newName: null,
+			error: {}
 		}
 	},
 	computed: {
@@ -86,12 +91,12 @@ export default {
 						this.isOpen = false
 					},
 					icon: 'icon-info',
-					text: !this.detailsOpen ? t('files_sharing', 'Show details') : t('files_sharing', 'Hide details')
+					text: !this.detailsOpen ? t('core', 'Show details') : t('core', 'Hide details')
 				},
 				{
 					action: () => this.openRename(),
 					icon: 'icon-rename',
-					text: t('files_sharing', 'Rename collection')
+					text: t('core', 'Rename collection')
 				}
 			]
 		},
@@ -141,11 +146,21 @@ export default {
 			this.newName = this.collection.name
 		},
 		renameCollection() {
+			if (this.newName === '') {
+				this.newName = null
+				return
+			}
 			this.$store.dispatch('renameCollection', {
 				collectionId: this.collection.id,
 				name: this.newName
 			}).then((collection) => {
 				this.newName = null
+			}).catch((e) => {
+				Vue.set(this.error, 'rename', t('core', 'Failed to rename collection'))
+				console.error(e)
+				setTimeout(() => {
+					Vue.set(this.error, 'rename', null)
+				}, 3000)
 			})
 		}
 	}
@@ -202,6 +217,10 @@ export default {
 			margin-top: 4px;
 			flex-grow: 1;
 		}
+		.error {
+			flex-basis: 100%;
+			width: 100%;
+		}
 		.resource-list-details {
 			flex-basis: 100%;
 			width: 100%;
@@ -247,4 +266,20 @@ export default {
 			}
 		}
 	}
+
+	.shouldshake {
+		animation: shake 0.6s 1 linear;
+	}
+	@keyframes shake {
+		0% { transform: translate(15px); }
+		20% { transform: translate(-15px); }
+		40% { transform: translate(7px); }
+		60% { transform: translate(-7px); }
+		80% { transform: translate(3px); }
+		100% { transform: translate(0px); }
+	}
+</style>
+
+<style>
+
 </style>

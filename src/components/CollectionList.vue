@@ -38,12 +38,17 @@
 				<template slot="option" slot-scope="props">
 					<span class="option__wrapper">
 						<span v-if="props.option.class" :class="props.option.class" class="avatar" />
-						<avatar v-else :display-name="props.option.title" :allow-placeholder="true" />
+						<avatar v-else-if="props.option.method !== 2" :display-name="props.option.title" :allow-placeholder="true" />
 						<span class="option__title">{{ props.option.title }}</span>
 					</span>
 				</template>
 			</multiselect>
 		</li>
+		<transition name="fade">
+			<li v-if="error" class="error">
+				{{ error }}
+			</li>
+		</transition>
 		<collection-list-item v-for="collection in collections" :key="collection.id" :collection="collection" />
 	</ul>
 </template>
@@ -97,6 +102,13 @@
 		}
 	}
 
+	.fade-enter-active, .fade-leave-active {
+		transition: opacity .5s;
+	}
+	.fade-enter, .fade-leave-to {
+		opacity: 0;
+	}
+
 </style>
 <style lang="scss">
 	/** TODO check why this doesn't work when scoped */
@@ -112,6 +124,8 @@
 
 import Vue from 'vue'
 import Vuex from 'vuex'
+import debounce from 'lodash/debounce'
+
 import CollectionListItem from '../components/CollectionListItem'
 import { CollectionStoreModule } from '../collectionstore'
 import Avatar from 'nextcloud-vue/dist/Components/Avatar'
@@ -122,6 +136,21 @@ const store = new Vuex.Store(CollectionStoreModule)
 
 const METHOD_CREATE_COLLECTION = 0
 const METHOD_ADD_TO_COLLECTION = 1
+const METHOD_HINT = 2
+
+const _debouncedSearch = debounce(
+	function(query) {
+		if (query !== '') {
+			this.$store.dispatch('search', query).then((collections) => {
+				this.searchCollections = collections
+			}).catch(e => {
+				console.error('Failed to search for collections', e)
+			})
+		}
+	},
+	500, {}
+)
+
 export default {
 	name: 'CollectionList',
 	store,
@@ -160,7 +189,8 @@ export default {
 			codes: undefined,
 			value: null,
 			model: {},
-			searchCollections: []
+			searchCollections: [],
+			error: null
 		}
 	},
 	computed: {
@@ -168,7 +198,7 @@ export default {
 			return this.$store.getters.collectionsByResource(this.type, this.id)
 		},
 		placeholder() {
-			return t('files_sharing', 'Add to a collection')
+			return t('core', 'Add to a collection')
 		},
 		options() {
 			let options = []
@@ -191,6 +221,12 @@ export default {
 					})
 				}
 			}
+			if (this.searchCollections.length === 0) {
+				options.push({
+					method: METHOD_HINT,
+					title: 'Type to search for existing collections'
+				})
+			}
 			return options
 		}
 	},
@@ -210,6 +246,8 @@ export default {
 						resourceType: selectedOption.type,
 						resourceId: id,
 						name: this.name
+					}).catch((e) => {
+						this.setError(t('core', 'Failed to create collection'), e)
 					})
 				}).catch((e) => {
 					console.error('No resource selected', e)
@@ -219,13 +257,13 @@ export default {
 			if (selectedOption.method === METHOD_ADD_TO_COLLECTION) {
 				this.$store.dispatch('addResourceToCollection', {
 					collectionId: selectedOption.collectionId, resourceType: this.type, resourceId: this.id
+				}).catch((e) => {
+					this.setError(t('core', 'Failed to add resource to collection'), e)
 				})
 			}
 		},
 		search(query) {
-			this.$store.dispatch('search', query).then((collections) => {
-				this.searchCollections = collections
-			})
+			_debouncedSearch.bind(this)(query)
 		},
 		showSelect() {
 			this.selectIsOpen = true
@@ -236,6 +274,13 @@ export default {
 		},
 		isVueComponent(object) {
 			return object._isVue
+		},
+		setError(error, e) {
+			console.error(error, e)
+			this.error = error
+			setTimeout(() => {
+				this.error = null
+			}, 5000)
 		}
 	}
 }

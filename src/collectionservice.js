@@ -48,13 +48,6 @@ class CollectionService {
 			.then(result => {
 				return result.data.ocs.data
 			})
-			.catch(error => {
-				if (error.response.status === 404) {
-					return []
-				}
-				console.error(error)
-				return Promise.reject(error)
-			})
 	}
 
 	createCollection(resourceType, resourceId, name) {
@@ -64,10 +57,6 @@ class CollectionService {
 		})
 			.then((response) => {
 				return response.data.ocs.data
-			})
-			.catch(error => {
-				console.error(error)
-				return Promise.reject(error)
 			})
 	}
 
@@ -90,8 +79,9 @@ class CollectionService {
 	}
 
 	search(query) {
+		query = encodeURI(query)
 		const searchBase = OC.linkToOCS('collaboration/resources/collections/search', 2)
-		return this.http.get(`${searchBase}%25${query}%25?format=json`)
+		return this.http.get(`${searchBase}${query}?format=json`)
 			.then((response) => {
 				return response.data.ocs.data
 			})

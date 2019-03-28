@@ -30,6 +30,7 @@
 		"dist"
 	],
 	"dependencies": {
+		"lodash": "^4.17.11",
 		"nextcloud-axios": "^0.1.2",
 		"nextcloud-vue": "^0.9.0",
 		"v-tooltip": "^2.0.0-rc.33",
