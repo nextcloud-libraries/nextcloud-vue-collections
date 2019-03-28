@@ -44,6 +44,9 @@
 				</template>
 			</multiselect>
 		</li>
+		 <transition name="fade">
+		<li class="error" v-if="error">{{ error }}</li>
+		 </transition>
 		<collection-list-item v-for="collection in collections" :key="collection.id" :collection="collection" />
 	</ul>
 </template>
@@ -97,6 +100,13 @@
 		}
 	}
 
+	.fade-enter-active, .fade-leave-active {
+		transition: opacity .5s;
+	}
+	.fade-enter, .fade-leave-to {
+		opacity: 0;
+	}
+
 </style>
 <style lang="scss">
 	/** TODO check why this doesn't work when scoped */
@@ -132,7 +142,7 @@ const _debouncedSearch = debounce(
 			this.$store.dispatch('search', query).then((collections) => {
 				this.searchCollections = collections
 			}).catch(e => {
-				OC.Notification.showTemporary(e)
+				console.error('Failed to search for collections', e)
 			})
 		}
 	},
@@ -177,7 +187,8 @@ export default {
 			codes: undefined,
 			value: null,
 			model: {},
-			searchCollections: []
+			searchCollections: [],
+			error: null
 		}
 	},
 	computed: {
@@ -185,7 +196,7 @@ export default {
 			return this.$store.getters.collectionsByResource(this.type, this.id)
 		},
 		placeholder() {
-			return t('files_sharing', 'Add to a collection')
+			return t('core', 'Add to a collection')
 		},
 		options() {
 			let options = []
@@ -233,6 +244,8 @@ export default {
 						resourceType: selectedOption.type,
 						resourceId: id,
 						name: this.name
+					}).catch((e) => {
+						this.setError(t('core', 'Failed to create collection'), e)
 					})
 				}).catch((e) => {
 					console.error('No resource selected', e)
@@ -242,6 +255,8 @@ export default {
 			if (selectedOption.method === METHOD_ADD_TO_COLLECTION) {
 				this.$store.dispatch('addResourceToCollection', {
 					collectionId: selectedOption.collectionId, resourceType: this.type, resourceId: this.id
+				}).catch((e) => {
+					this.setError(t('core', 'Failed to add resource to collection'), e)
 				})
 			}
 		},
@@ -257,6 +272,13 @@ export default {
 		},
 		isVueComponent(object) {
 			return object._isVue
+		},
+		setError(error, e) {
+			console.error(error, e)
+			this.error = error
+			setTimeout(() => {
+				this.error = null
+			}, 5000)
 		}
 	}
 }

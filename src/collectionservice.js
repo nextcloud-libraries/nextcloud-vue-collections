@@ -48,13 +48,6 @@ class CollectionService {
 			.then(result => {
 				return result.data.ocs.data
 			})
-			.catch(error => {
-				if (error.response.status === 404) {
-					return []
-				}
-				console.error(error)
-				return Promise.reject(error)
-			})
 	}
 
 	createCollection(resourceType, resourceId, name) {
@@ -64,10 +57,6 @@ class CollectionService {
 		})
 			.then((response) => {
 				return response.data.ocs.data
-			})
-			.catch(error => {
-				console.error(error)
-				return Promise.reject(error)
 			})
 	}
 
