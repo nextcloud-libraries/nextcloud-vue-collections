@@ -118,7 +118,6 @@ import CollectionListItem from '../components/CollectionListItem'
 import { CollectionStoreModule } from '../collectionstore'
 import Avatar from 'nextcloud-vue/dist/Components/Avatar'
 import Multiselect from 'nextcloud-vue/dist/Components/Multiselect'
-import { setTimeout } from 'timers';
 Vue.use(Vuex)
 
 const store = new Vuex.Store(CollectionStoreModule)
