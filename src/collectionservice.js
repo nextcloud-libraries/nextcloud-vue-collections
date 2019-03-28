@@ -90,8 +90,9 @@ class CollectionService {
 	}
 
 	search(query) {
+		query = encodeURI(query)
 		const searchBase = OC.linkToOCS('collaboration/resources/collections/search', 2)
-		return this.http.get(`${searchBase}%25${query}%25?format=json`)
+		return this.http.get(`${searchBase}${query}?format=json`)
 			.then((response) => {
 				return response.data.ocs.data
 			})
