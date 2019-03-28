@@ -112,6 +112,8 @@
 
 import Vue from 'vue'
 import Vuex from 'vuex'
+import debounce from 'lodash/debounce';
+
 import CollectionListItem from '../components/CollectionListItem'
 import { CollectionStoreModule } from '../collectionstore'
 import Avatar from 'nextcloud-vue/dist/Components/Avatar'
@@ -122,6 +124,16 @@ const store = new Vuex.Store(CollectionStoreModule)
 
 const METHOD_CREATE_COLLECTION = 0
 const METHOD_ADD_TO_COLLECTION = 1
+
+const _debouncedSearch = debounce(
+	function(query) {
+		this.$store.dispatch('search', query).then((collections) => {
+			this.searchCollections = collections
+		})
+	},
+	500, {}
+)
+
 export default {
 	name: 'CollectionList',
 	store,
@@ -223,9 +235,7 @@ export default {
 			}
 		},
 		search(query) {
-			this.$store.dispatch('search', query).then((collections) => {
-				this.searchCollections = collections
-			})
+			_debouncedSearch.bind(this)(query)
 		},
 		showSelect() {
 			this.selectIsOpen = true
