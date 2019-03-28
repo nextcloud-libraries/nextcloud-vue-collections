@@ -38,7 +38,7 @@
 				<template slot="option" slot-scope="props">
 					<span class="option__wrapper">
 						<span v-if="props.option.class" :class="props.option.class" class="avatar" />
-						<avatar v-else :display-name="props.option.title" :allow-placeholder="true" />
+						<avatar v-else-if="props.option.method !== 2" :display-name="props.option.title" :allow-placeholder="true" />
 						<span class="option__title">{{ props.option.title }}</span>
 					</span>
 				</template>
@@ -202,6 +202,12 @@ export default {
 						collectionId: this.searchCollections[index].id
 					})
 				}
+			}
+			if (this.searchCollections.length === 0) {
+				options.push({
+						method: METHOD_HINT,
+						title: 'Type to search for existing collections'
+					})
 			}
 			return options
 		}
