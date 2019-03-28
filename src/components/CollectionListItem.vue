@@ -25,7 +25,7 @@
 		<avatar :display-name="collection.name" :allow-placeholder="true" class="collection-avatar" />
 		<span v-if="newName === null" class="collection-item-name" title=""
 			@click="showDetails">{{ collection.name }}</span>
-		<form v-else @submit.prevent="renameCollection" :class="{'shouldshake': error.rename }">
+		<form v-else :class="{'shouldshake': error.rename }" @submit.prevent="renameCollection">
 			<input v-model="newName" type="text" autocomplete="off"
 				autocapitalize="off">
 			<input type="submit" value="" class="icon-confirm">
@@ -35,11 +35,13 @@
 				:href="resource.link" :class="typeClass(resource)"><img :src="iconUrl(resource)"></a>
 		</div>
 
-		<span class="sharingOptionsGroup" v-if="newName === null">
+		<span v-if="newName === null" class="sharingOptionsGroup">
 			<action :actions="menu" />
 		</span>
 		<transition name="fade">
-			<div class="error" v-if="error.rename">{{ error.rename }}</div>
+			<div v-if="error.rename" class="error">
+				{{ error.rename }}
+			</div>
 		</transition>
 		<transition name="fade">
 			<ul v-if="detailsOpen" class="resource-list-details">

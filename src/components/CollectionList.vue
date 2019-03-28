@@ -44,9 +44,11 @@
 				</template>
 			</multiselect>
 		</li>
-		 <transition name="fade">
-		<li class="error" v-if="error">{{ error }}</li>
-		 </transition>
+		<transition name="fade">
+			<li v-if="error" class="error">
+				{{ error }}
+			</li>
+		</transition>
 		<collection-list-item v-for="collection in collections" :key="collection.id" :collection="collection" />
 	</ul>
 </template>
@@ -122,7 +124,7 @@
 
 import Vue from 'vue'
 import Vuex from 'vuex'
-import debounce from 'lodash/debounce';
+import debounce from 'lodash/debounce'
 
 import CollectionListItem from '../components/CollectionListItem'
 import { CollectionStoreModule } from '../collectionstore'
@@ -221,9 +223,9 @@ export default {
 			}
 			if (this.searchCollections.length === 0) {
 				options.push({
-						method: METHOD_HINT,
-						title: 'Type to search for existing collections'
-					})
+					method: METHOD_HINT,
+					title: 'Type to search for existing collections'
+				})
 			}
 			return options
 		}
