@@ -24,25 +24,28 @@
 	<ul v-if="collections && type && id" id="collection-list" class="collection-list">
 		<li @click="showSelect">
 			<div class="avatar">
-				<span class="icon-category-integration icon-white" />
+				<span class="icon-projects icon-white" />
 			</div>
-			<multiselect ref="select" v-model="value" :options="options"
-				:placeholder="placeholder" tag-placeholder="Create a new collection" label="title"
-				track-by="title" :reset-after="true" :limit="5"
-				@select="select" @search-change="search">
-				<template slot="singleLabel" slot-scope="props">
-					<span class="option__desc">
-						<span class="option__title">{{ props.option.title }}</span>
-					</span>
-				</template>
-				<template slot="option" slot-scope="props">
-					<span class="option__wrapper">
-						<span v-if="props.option.class" :class="props.option.class" class="avatar" />
-						<avatar v-else-if="props.option.method !== 2" :display-name="props.option.title" :allow-placeholder="true" />
-						<span class="option__title">{{ props.option.title }}</span>
-					</span>
-				</template>
-			</multiselect>
+			<div id="collection-select-container">
+				<multiselect ref="select" v-model="value" :options="options"
+					:placeholder="placeholder" tag-placeholder="Create a new project" label="title"
+					track-by="title" :reset-after="true" :limit="5"
+					@select="select" @search-change="search">
+					<template slot="singleLabel" slot-scope="props">
+						<span class="option__desc">
+							<span class="option__title">{{ props.option.title }}</span>
+						</span>
+					</template>
+					<template slot="option" slot-scope="props">
+						<span class="option__wrapper">
+							<span v-if="props.option.class" :class="props.option.class" class="avatar" />
+							<avatar v-else-if="props.option.method !== 2" :display-name="props.option.title" :allow-placeholder="true" />
+							<span class="option__title">{{ props.option.title }}</span>
+						</span>
+					</template>
+				</multiselect>
+				<p class="hint">{{ t('core', 'Connect items to a project to make them easier to find') }}</p>
+			</div>
 		</li>
 		<transition name="fade">
 			<li v-if="error" class="error">
@@ -58,9 +61,24 @@
 		font-weight: 300;
 		display: flex;
 	}
+	#collection-select-container {
+		display: flex;
+		flex-direction: column;
+		margin-top: -5px;
+	}
 	.multiselect {
 		width: 100%;
 		margin-left: 3px;
+	}
+	p.hint {
+		color: var(--color-text-light);
+		margin-top: -15px;
+		z-index: 1;
+		padding: 2px 8px;
+		font-size: 95%;
+	}
+	.multiselect--active + p.hint {
+		opacity: 0;
 	}
 	span.avatar {
 		padding: 16px;
@@ -82,13 +100,11 @@
 	}
 
 	/** TODO provide white icon in core */
-	.icon-category-integration.icon-white {
-		filter: invert(100%);
+	.icon-projects {
 		padding: 8px;
 		display: block;
 		background-repeat: no-repeat;
 		background-position: center;
-		background-image: var(--icon-integration-000);
 	}
 
 	.option__wrapper {
@@ -198,7 +214,7 @@ export default {
 			return this.$store.getters.collectionsByResource(this.type, this.id)
 		},
 		placeholder() {
-			return t('core', 'Add to a collection')
+			return t('core', 'Add to a project')
 		},
 		options() {
 			let options = []
@@ -224,7 +240,7 @@ export default {
 			if (this.searchCollections.length === 0) {
 				options.push({
 					method: METHOD_HINT,
-					title: 'Type to search for existing collections'
+					title: t('core', 'Type to search for existing projects')
 				})
 			}
 			return options
@@ -247,7 +263,7 @@ export default {
 						resourceId: id,
 						name: this.name
 					}).catch((e) => {
-						this.setError(t('core', 'Failed to create collection'), e)
+						this.setError(t('core', 'Failed to create a project'), e)
 					})
 				}).catch((e) => {
 					console.error('No resource selected', e)
@@ -258,7 +274,7 @@ export default {
 				this.$store.dispatch('addResourceToCollection', {
 					collectionId: selectedOption.collectionId, resourceType: this.type, resourceId: this.id
 				}).catch((e) => {
-					this.setError(t('core', 'Failed to add resource to collection'), e)
+					this.setError(t('core', 'Failed to add the item to the project'), e)
 				})
 			}
 		},
