@@ -96,7 +96,7 @@ export default {
 				{
 					action: () => this.openRename(),
 					icon: 'icon-rename',
-					text: t('core', 'Rename collection')
+					text: t('core', 'Rename project')
 				}
 			]
 		},
@@ -156,7 +156,7 @@ export default {
 			}).then((collection) => {
 				this.newName = null
 			}).catch((e) => {
-				Vue.set(this.error, 'rename', t('core', 'Failed to rename collection'))
+				Vue.set(this.error, 'rename', t('core', 'Failed to rename the project'))
 				console.error(e)
 				setTimeout(() => {
 					Vue.set(this.error, 'rename', null)
