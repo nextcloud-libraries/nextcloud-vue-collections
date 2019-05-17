@@ -2,6 +2,7 @@
   - @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
   -
   - @author Julius Härtl <jus@bitgrid.net>
+  - @author John Molakvoæ <skjnldsv@protonmail.com>
   -
   - @license GNU AGPL version 3 or any later version
   -
@@ -22,7 +23,7 @@
 
 <template>
 	<li class="collection-list-item">
-		<avatar :display-name="collection.name" :allow-placeholder="true" class="collection-avatar" />
+		<Avatar :display-name="collection.name" :allow-placeholder="true" class="collection-avatar" />
 		<span v-if="newName === null" class="collection-item-name" title=""
 			@click="showDetails">{{ collection.name }}</span>
 		<form v-else :class="{'shouldshake': error.rename }" @submit.prevent="renameCollection">
@@ -36,8 +37,20 @@
 		</div>
 
 		<span v-if="newName === null" class="sharingOptionsGroup">
-			<action :actions="menu" />
+			<Actions>
+				<ActionButton
+					icon="icon-info"
+					@click.prevent="toggleDetails">
+					{{ detailsOpen ? t('core', 'Hide details') : t('core', 'Show details') }}
+				</ActionButton>
+				<ActionButton
+					icon="icon-rename"
+					@click.prevent="openRename">
+					{{ t('core', 'Rename project') }}
+				</ActionButton>
+			</Actions>
 		</span>
+
 		<transition name="fade">
 			<div v-if="error.rename" class="error">
 				{{ error.rename }}
@@ -56,15 +69,17 @@
 
 <script>
 import Vue from 'vue'
-import Action from 'nextcloud-vue/dist/Components/Action'
+import Actions from 'nextcloud-vue/dist/Components/Action'
+import ActionButton from 'nextcloud-vue/dist/Components/ActionButton'
 import Avatar from 'nextcloud-vue/dist/Components/Avatar'
 import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
 
 export default {
 	name: 'CollectionListItem',
 	components: {
-		Avatar: Avatar,
-		Action
+		Avatar,
+		Actions,
+		ActionButton
 	},
 	directives: { Tooltip },
 	props: {
@@ -75,31 +90,12 @@ export default {
 	},
 	data() {
 		return {
-			isOpen: false,
 			detailsOpen: false,
 			newName: null,
 			error: {}
 		}
 	},
 	computed: {
-		menu() {
-			/* eslint-disable vue/no-side-effects-in-computed-properties */
-			return [
-				{
-					action: () => {
-						this.detailsOpen = !this.detailsOpen
-						this.isOpen = false
-					},
-					icon: 'icon-info',
-					text: !this.detailsOpen ? t('core', 'Show details') : t('core', 'Hide details')
-				},
-				{
-					action: () => this.openRename(),
-					icon: 'icon-rename',
-					text: t('core', 'Rename project')
-				}
-			]
-		},
 		getIcon() {
 			return (resource) => [resource.iconClass]
 		},
@@ -122,14 +118,8 @@ export default {
 		}
 	},
 	methods: {
-		open() {
-			this.isOpen = true
-		},
-		close() {
-			this.isOpen = false
-		},
-		toggle() {
-			this.isOpen = !this.isOpen
+		toggleDetails() {
+			this.detailsOpen = !this.detailsOpen
 		},
 		showDetails() {
 			this.detailsOpen = true
@@ -278,8 +268,4 @@ export default {
 		80% { transform: translate(3px); }
 		100% { transform: translate(0px); }
 	}
-</style>
-
-<style>
-
 </style>

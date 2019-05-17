@@ -27,7 +27,7 @@
 				<span class="icon-projects icon-white" />
 			</div>
 			<div id="collection-select-container">
-				<multiselect ref="select" v-model="value" :options="options"
+				<Multiselect ref="select" v-model="value" :options="options"
 					:placeholder="placeholder" tag-placeholder="Create a new project" label="title"
 					track-by="title" :reset-after="true" :limit="5"
 					@select="select" @search-change="search">
@@ -39,12 +39,14 @@
 					<template slot="option" slot-scope="props">
 						<span class="option__wrapper">
 							<span v-if="props.option.class" :class="props.option.class" class="avatar" />
-							<avatar v-else-if="props.option.method !== 2" :display-name="props.option.title" :allow-placeholder="true" />
+							<Avatar v-else-if="props.option.method !== 2" :display-name="props.option.title" :allow-placeholder="true" />
 							<span class="option__title">{{ props.option.title }}</span>
 						</span>
 					</template>
-				</multiselect>
-				<p class="hint">{{ t('core', 'Connect items to a project to make them easier to find') }}</p>
+				</Multiselect>
+				<p class="hint">
+					{{ t('core', 'Connect items to a project to make them easier to find') }}
+				</p>
 			</div>
 		</li>
 		<transition name="fade">
@@ -52,7 +54,7 @@
 				{{ error }}
 			</li>
 		</transition>
-		<collection-list-item v-for="collection in collections" :key="collection.id" :collection="collection" />
+		<CollectionListItem v-for="collection in collections" :key="collection.id" :collection="collection" />
 	</ul>
 </template>
 

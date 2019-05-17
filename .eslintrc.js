@@ -26,7 +26,11 @@ module.exports = {
 		'plugin:vue/recommended',
 		'standard'
 	],
-	plugins: ['vue', 'node'],
+	plugins: [
+		'nextcloud',
+		'node',
+		'vue',
+	],
 	rules: {
 		// space before function ()
 		'space-before-function-paren': ['error', 'never'],
@@ -48,11 +52,20 @@ module.exports = {
 		'operator-linebreak': ['error', 'before'],
 		// ternary on multiline
 		'multiline-ternary': ['error', 'always-multiline'],
+		// Nextcloud deprecations
+		'nextcloud/no-deprecations': 'warn',
+		// don't allow removed APIs
+		'nextcloud/no-removed-apis': 'error',
 		// es6 import/export and require
 		'node/no-unpublished-require': ['off'],
 		'node/no-unsupported-features/es-syntax': ['off'],
 		// kebab case components for vuejs
-		'vue/component-name-in-template-casing': ['error', 'kebab-case'],
+		'vue/component-name-in-template-casing': ['error', 'PascalCase'],
+		// force name
+		'vue/match-component-file-name': ['error', {
+			'extensions': ['jsx', 'vue', 'js'],
+			'shouldMatchCase': true
+		 }],
 		// space before self-closing elements
 		'vue/html-closing-bracket-spacing': 'error',
 		// no ending html tag on a new line
