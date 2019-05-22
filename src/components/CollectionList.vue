@@ -137,9 +137,7 @@
 		}
 	}
 </style>
-
 <script>
-
 import Vue from 'vue'
 import Vuex from 'vuex'
 import debounce from 'lodash/debounce'
