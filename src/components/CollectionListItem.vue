@@ -128,7 +128,7 @@ export default {
 			this.detailsOpen = false
 		},
 		removeResource(collection, resource) {
-			this.$store.dispatch('removeResource', {
+			this.$parent.collectionStore.dispatch('removeResource', {
 				collectionId: collection.id, resourceType: resource.type, resourceId: resource.id
 			})
 		},
@@ -140,7 +140,7 @@ export default {
 				this.newName = null
 				return
 			}
-			this.$store.dispatch('renameCollection', {
+			this.$parent.collectionStore.dispatch('renameCollection', {
 				collectionId: this.collection.id,
 				name: this.newName
 			}).then((collection) => {

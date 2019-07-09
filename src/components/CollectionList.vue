@@ -157,7 +157,7 @@ const METHOD_HINT = 2
 const _debouncedSearch = debounce(
 	function(query) {
 		if (query !== '') {
-			this.$store.dispatch('search', query).then((collections) => {
+			this.collectionStore.dispatch('search', query).then((collections) => {
 				this.searchCollections = collections
 			}).catch(e => {
 				console.error('Failed to search for collections', e)
@@ -206,12 +206,13 @@ export default {
 			value: null,
 			model: {},
 			searchCollections: [],
-			error: null
+			error: null,
+			collectionStore: store
 		}
 	},
 	computed: {
 		collections() {
-			return this.$store.getters.collectionsByResource(this.type, this.id)
+			return this.collectionStore.getters.collectionsByResource(this.type, this.id)
 		},
 		placeholder() {
 			return t('core', 'Add to a project')
@@ -247,7 +248,7 @@ export default {
 		}
 	},
 	mounted() {
-		this.$store.dispatch('fetchCollectionsByResource', {
+		this.collectionStore.dispatch('fetchCollectionsByResource', {
 			resourceType: this.type,
 			resourceId: this.id
 		})
@@ -256,7 +257,7 @@ export default {
 		select(selectedOption, id) {
 			if (selectedOption.method === METHOD_CREATE_COLLECTION) {
 				selectedOption.action().then((id) => {
-					this.$store.dispatch('createCollection', {
+					this.collectionStore.dispatch('createCollection', {
 						baseResourceType: this.type,
 						baseResourceId: this.id,
 						resourceType: selectedOption.type,
@@ -271,7 +272,7 @@ export default {
 			}
 
 			if (selectedOption.method === METHOD_ADD_TO_COLLECTION) {
-				this.$store.dispatch('addResourceToCollection', {
+				this.collectionStore.dispatch('addResourceToCollection', {
 					collectionId: selectedOption.collectionId, resourceType: this.type, resourceId: this.id
 				}).catch((e) => {
 					this.setError(t('core', 'Failed to add the item to the project'), e)
