@@ -74,6 +74,9 @@ import ActionButton from 'nextcloud-vue/dist/Components/ActionButton'
 import Avatar from 'nextcloud-vue/dist/Components/Avatar'
 import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
 
+Tooltip.options.defaultHtml = false
+
+
 export default {
 	name: 'CollectionListItem',
 	components: {
