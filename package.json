@@ -14,7 +14,7 @@
 	"license": "AGPL-3.0",
 	"scripts": {
 		"build": "NODE_ENV=production rollup -c",
-		"watch": "NODE_ENV=production rollup -c --watch",
+		"watch": "NODE_ENV=development rollup -c --watch",
 		"lint": "eslint --ext .js,.vue src",
 		"lint:fix": "eslint --ext .js,.vue src --fix",
 		"stylelint": "stylelint src",

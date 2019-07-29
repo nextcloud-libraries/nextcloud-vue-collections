@@ -219,16 +219,15 @@ export default {
 		},
 		options() {
 			let options = []
-			let types = window.OCP.Collaboration.getTypes().sort()
-			for (let type in types) {
+			window.OCP.Collaboration.getTypes().sort().forEach((type) => {
 				options.push({
 					method: METHOD_CREATE_COLLECTION,
-					type: types[type],
-					title: window.OCP.Collaboration.getLabel(types[type]),
-					class: window.OCP.Collaboration.getIcon(types[type]),
-					action: () => window.OCP.Collaboration.trigger(types[type])
+					type,
+					title: window.OCP.Collaboration.getLabel(type),
+					class: window.OCP.Collaboration.getIcon(type),
+					action: () => window.OCP.Collaboration.trigger(type)
 				})
-			}
+			})
 			for (let index in this.searchCollections) {
 				if (this.collections.findIndex((collection) => collection.id === this.searchCollections[index].id) === -1) {
 					options.push({
