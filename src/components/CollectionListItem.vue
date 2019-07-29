@@ -76,7 +76,6 @@ import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
 
 Tooltip.options.defaultHtml = false
 
-
 export default {
 	name: 'CollectionListItem',
 	components: {
