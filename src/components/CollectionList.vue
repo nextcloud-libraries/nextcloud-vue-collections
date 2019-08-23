@@ -76,8 +76,10 @@
 		color: var(--color-text-light);
 		margin-top: -15px;
 		z-index: 1;
-		padding: 2px 8px;
+		padding: 8px 8px;
 		font-size: 95%;
+		line-height: normal;
+
 	}
 	.multiselect--active + p.hint {
 		opacity: 0;
