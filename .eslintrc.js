@@ -57,6 +57,9 @@ module.exports = {
 		// don't allow removed APIs
 		'nextcloud/no-removed-apis': 'error',
 		// es6 import/export and require
+		'node/no-missing-import': ['error', {
+	            'tryExtensions': ['.js', '.json', '.vue']
+		}],
 		'node/no-unpublished-require': ['off'],
 		'node/no-unsupported-features/es-syntax': ['off'],
 		// kebab case components for vuejs
