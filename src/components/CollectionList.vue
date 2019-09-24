@@ -57,88 +57,6 @@
 		<CollectionListItem v-for="collection in collections" :key="collection.id" :collection="collection" />
 	</ul>
 </template>
-
-<style lang="scss" scoped>
-	.collection-list > li {
-		font-weight: 300;
-		display: flex;
-	}
-	#collection-select-container {
-		display: flex;
-		flex-direction: column;
-		margin-top: -5px;
-	}
-	.multiselect {
-		width: 100%;
-		margin-left: 3px;
-	}
-	p.hint {
-		color: var(--color-text-light);
-		margin-top: -15px;
-		z-index: 1;
-		padding: 8px 8px;
-		font-size: 95%;
-		line-height: normal;
-
-	}
-	.multiselect--active + p.hint {
-		opacity: 0;
-	}
-	span.avatar {
-		padding: 16px;
-		display: block;
-		background-repeat: no-repeat;
-		background-position: center;
-		opacity: 0.7;
-		&:hover {
-			opacity: 1;
-		}
-	}
-
-	div.avatar {
-		background-color: var(--color-primary);
-		width: 32px;
-		height: 32px;
-		padding: 8px;
-		margin-bottom: 6px;
-	}
-
-	/** TODO provide white icon in core */
-	.icon-projects {
-		padding: 8px;
-		display: block;
-		background-repeat: no-repeat;
-		background-position: center;
-	}
-
-	.option__wrapper {
-		display: flex;
-		.avatar {
-			display: block;
-			background-color: var(--color-background-darker) !important;
-		}
-		.option__title {
-			padding: 4px;
-		}
-	}
-
-	.fade-enter-active, .fade-leave-active {
-		transition: opacity .5s;
-	}
-	.fade-enter, .fade-leave-to {
-		opacity: 0;
-	}
-
-</style>
-<style lang="scss">
-	/** TODO check why this doesn't work when scoped */
-	.collection-list .multiselect:not(.multiselect--active ) .multiselect__tags {
-		border: none !important;
-		input::placeholder {
-			color: var(--color-main-text);
-		}
-	}
-</style>
 <script>
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -303,3 +221,92 @@ export default {
 	}
 }
 </script>
+
+<style lang="scss" scoped>
+	.collection-list > li {
+		display: flex;
+		align-items: center;
+		height: 44px;
+	}
+	#collection-select-container {
+		display: flex;
+		flex-direction: column;
+		margin-top: -5px;
+	}
+	.multiselect {
+		z-index: 2;
+		width: 100%;
+		margin-left: 3px;
+		background-color: transparent;
+		&::v-deep {
+			&:not(.multiselect--active) .multiselect__tags {
+				border: none !important;
+				input::placeholder {
+					color: var(--color-main-text);
+				}
+			}
+			.multiselect__input {
+				background-color: transparent;
+			}
+		}
+		// avatar in the dropdown
+		span.avatar {
+			display: block;
+			padding: 16px;
+			opacity: .7;
+			background-repeat: no-repeat;
+			background-position: center;
+			&:hover {
+				opacity: 1;
+			}
+		}
+		// hide text when opened multiselect
+		&.multiselect--active + p.hint {
+			opacity: 0;
+		}
+	}
+
+	p.hint {
+		z-index: 1;
+		// fix alignment
+		margin-top: -16px;
+		padding: 8px 8px;
+		color: var(--color-text-maxcontrast);
+		line-height: normal;
+	}
+
+	div.avatar {
+		width: 32px;
+		height: 32px;
+		margin: 0;
+		padding: 8px;
+		background-color: var(--color-primary);
+	}
+
+	/** TODO provide white icon in core */
+	.icon-projects {
+		display: block;
+		padding: 8px;
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+
+	.option__wrapper {
+		display: flex;
+		.avatar {
+			display: block;
+			background-color: var(--color-background-darker) !important;
+		}
+		.option__title {
+			padding: 4px;
+		}
+	}
+
+	.fade-enter-active, .fade-leave-active {
+		transition: opacity .5s;
+	}
+	.fade-enter, .fade-leave-to {
+		opacity: 0;
+	}
+
+</style>
