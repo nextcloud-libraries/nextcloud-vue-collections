@@ -30,12 +30,11 @@
 		"dist"
 	],
 	"dependencies": {
+		"@nextcloud/axios": "^0.4.2",
+		"@nextcloud/router": "^0.1.0",
 		"lodash": "^4.17.11",
-		"nextcloud-axios": "^0.2.0",
 		"nextcloud-vue": "^0.12.1",
-		"v-tooltip": "^3.0.0-alpha.7",
 		"vue": "^2.6.6",
-		"vue-click-outside": "^1.0.7",
 		"vuex": "^3.1.0"
 	},
 	"engines": {

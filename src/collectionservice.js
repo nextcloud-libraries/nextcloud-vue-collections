@@ -20,13 +20,14 @@
  *
  */
 
-import axios from 'nextcloud-axios'
+import axios from '@nextcloud/axios'
+import { generateOcsUrl } from '@nextcloud/router'
 
 class CollectionService {
 
 	constructor() {
 		this.http = axios
-		this.baseUrl = OC.linkToOCS('collaboration/resources', 2)
+		this.baseUrl = generateOcsUrl('collaboration/resources', 2)
 	}
 
 	listCollection(collectionId) {
@@ -34,7 +35,7 @@ class CollectionService {
 	}
 
 	renameCollection(collectionId, collectionName) {
-		const resourceBase = OC.linkToOCS('collaboration/resources/collections', 2)
+		const resourceBase = generateOcsUrl('collaboration/resources/collections', 2)
 		return this.http.put(`${resourceBase}${collectionId}?format=json`, {
 			collectionName
 		}).then(result => {
@@ -43,7 +44,7 @@ class CollectionService {
 	}
 
 	getCollectionsByResource(resourceType, resourceId) {
-		const resourceBase = OC.linkToOCS(`collaboration/resources/${resourceType}`, 2)
+		const resourceBase = generateOcsUrl(`collaboration/resources/${resourceType}`, 2)
 		return this.http.get(`${resourceBase}${resourceId}?format=json`)
 			.then(result => {
 				return result.data.ocs.data
@@ -51,7 +52,7 @@ class CollectionService {
 	}
 
 	createCollection(resourceType, resourceId, name) {
-		const resourceBase = OC.linkToOCS(`collaboration/resources/${resourceType}`, 2)
+		const resourceBase = generateOcsUrl(`collaboration/resources/${resourceType}`, 2)
 		return this.http.post(`${resourceBase}${resourceId}?format=json`, {
 			name: name
 		})
@@ -62,7 +63,7 @@ class CollectionService {
 
 	addResource(collectionId, resourceType, resourceId) {
 		resourceId = '' + resourceId
-		const resourceBase = OC.linkToOCS('collaboration/resources/collections', 2)
+		const resourceBase = generateOcsUrl('collaboration/resources/collections', 2)
 		return this.http.post(`${resourceBase}${collectionId}?format=json`, {
 			resourceType,
 			resourceId
@@ -80,7 +81,7 @@ class CollectionService {
 
 	search(query) {
 		query = encodeURI(query)
-		const searchBase = OC.linkToOCS('collaboration/resources/collections/search', 2)
+		const searchBase = generateOcsUrl('collaboration/resources/collections/search', 2)
 		return this.http.get(`${searchBase}${query}?format=json`)
 			.then((response) => {
 				return response.data.ocs.data
