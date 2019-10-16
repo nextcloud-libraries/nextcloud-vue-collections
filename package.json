@@ -29,6 +29,10 @@
 		"README.md",
 		"dist"
 	],
+	"peerDependencies": {
+		"nextcloud-vue": "^0.12.1",
+		"vue": "^2.6.6"
+	},
 	"dependencies": {
 		"@nextcloud/axios": "^0.4.2",
 		"@nextcloud/router": "^0.1.0",
