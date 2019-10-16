@@ -23,85 +23,77 @@
 import Vue from 'vue'
 import service from './collectionservice'
 
-const CollectionStoreModule = {
-	state: {
-		collections: []
+const state = Vue.observable({
+	collections: []
+})
+
+const mutations = {
+	addCollections(collections) {
+		Vue.set(state, 'collections', collections)
 	},
-	mutations: {
-		addCollections(state, collections) {
-			state.collections = collections
-		},
-		addCollection(state, collection) {
+	addCollection(collection) {
+		state.collections.push(collection)
+	},
+	removeCollection(collectionId) {
+		Vue.set(state, 'collections', state.collections.filter(item => item.id !== collectionId))
+	},
+	updateCollection(collection) {
+		let index = state.collections.findIndex((_item) => _item.id === collection.id)
+		if (index !== -1) {
+			Vue.set(state.collections, index, collection)
+		} else {
 			state.collections.push(collection)
-		},
-		removeCollection(state, collectionId) {
-			state.collections = state.collections.filter(item => item.id !== collectionId)
-		},
-		updateCollection(state, collection) {
-			let index = state.collections.findIndex((_item) => _item.id === collection.id)
-			if (index !== -1) {
-				Vue.set(state.collections, index, collection)
-			} else {
-				state.collections.push(collection)
-			}
-		}
-	},
-	getters: {
-		collectionsByResource(state) {
-			return (resourceType, resourceId) => {
-				return state.collections.filter((collection) => {
-					return typeof collection.resources.find((resource) => resource && resource.id === '' + resourceId && resource.type === resourceType) !== 'undefined'
-				})
-			}
-		},
-		getSearchResults(state) {
-			return (term) => {
-				return state.collections.filter((collection) => collection.name.contains(term))
-			}
-		}
-	},
-	actions: {
-		fetchCollectionsByResource(context, { resourceType, resourceId }) {
-			return service.getCollectionsByResource(resourceType, resourceId).then((collections) => {
-				context.commit('addCollections', collections)
-				return collections
-			})
-		},
-		createCollection(context, { baseResourceType, baseResourceId, resourceType, resourceId, name }) {
-			return service.createCollection(baseResourceType, baseResourceId, name).then((collection) => {
-				context.commit('addCollection', collection)
-				context.dispatch('addResourceToCollection', {
-					collectionId: collection.id,
-					resourceType,
-					resourceId
-				})
-			})
-		},
-		renameCollection(context, { collectionId, name }) {
-			return service.renameCollection(collectionId, name).then((collection) => {
-				context.commit('updateCollection', collection)
-				return collection
-			})
-		},
-		addResourceToCollection(context, { collectionId, resourceType, resourceId }) {
-			return service.addResource(collectionId, resourceType, resourceId).then((collection) => {
-				context.commit('updateCollection', collection)
-				return collection
-			})
-		},
-		removeResource(context, { collectionId, resourceType, resourceId }) {
-			return service.removeResource(collectionId, resourceType, resourceId).then((collection) => {
-				if (collection.resources.length > 0) {
-					context.commit('updateCollection', collection)
-				} else {
-					context.commit('removeCollection', collectionId)
-				}
-			})
-		},
-		search(context, query) {
-			return service.search(query)
 		}
 	}
 }
 
-export { CollectionStoreModule }
+const actions = {
+	fetchCollectionsByResource({ resourceType, resourceId }) {
+		return service.getCollectionsByResource(resourceType, resourceId).then((collections) => {
+			mutations.addCollections(collections)
+			return collections
+		})
+	},
+	createCollection({ baseResourceType, baseResourceId, resourceType, resourceId, name }) {
+		return service.createCollection(baseResourceType, baseResourceId, name).then((collection) => {
+			mutations.addCollection(collection)
+			actions.addResourceToCollection({
+				collectionId: collection.id,
+				resourceType,
+				resourceId
+			})
+		})
+	},
+	renameCollection({ collectionId, name }) {
+		return service.renameCollection(collectionId, name).then((collection) => {
+			mutations.updateCollection(collection)
+			return collection
+		})
+	},
+	addResourceToCollection({ collectionId, resourceType, resourceId }) {
+		return service.addResource(collectionId, resourceType, resourceId).then((collection) => {
+			mutations.updateCollection(collection)
+			return collection
+		})
+	},
+	removeResource({ collectionId, resourceType, resourceId }) {
+		return service.removeResource(collectionId, resourceType, resourceId).then((collection) => {
+			if (collection.resources.length > 0) {
+				mutations.updateCollection(collection)
+			} else {
+				mutations.removeCollection(collection)
+			}
+		})
+	},
+	search(query) {
+		return service.search(query)
+	}
+
+}
+
+const store = {
+	actions,
+	state
+}
+export default store
+export { actions, state }

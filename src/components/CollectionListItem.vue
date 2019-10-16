@@ -68,11 +68,12 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import Actions from 'nextcloud-vue/dist/Components/Actions'
 import ActionButton from 'nextcloud-vue/dist/Components/ActionButton'
 import Avatar from 'nextcloud-vue/dist/Components/Avatar'
 import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
+
+import { actions } from '../collectionstore'
 
 Tooltip.options.defaultHtml = false
 
@@ -130,7 +131,7 @@ export default {
 			this.detailsOpen = false
 		},
 		removeResource(collection, resource) {
-			this.$parent.collectionStore.dispatch('removeResource', {
+			actions.removeResource({
 				collectionId: collection.id, resourceType: resource.type, resourceId: resource.id
 			})
 		},
@@ -142,13 +143,13 @@ export default {
 				this.newName = null
 				return
 			}
-			this.$parent.collectionStore.dispatch('renameCollection', {
+			actions.renameCollection({
 				collectionId: this.collection.id,
 				name: this.newName
 			}).then((collection) => {
 				this.newName = null
 			}).catch((e) => {
-				Vue.set(this.error, 'rename', t('core', 'Failed to rename the project'))
+				this.$set(this.error, 'rename', t('core', 'Failed to rename the project'))
 				console.error(e)
 				setTimeout(() => {
 					Vue.set(this.error, 'rename', null)

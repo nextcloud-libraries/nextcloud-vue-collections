@@ -58,17 +58,13 @@
 	</ul>
 </template>
 <script>
-import Vue from 'vue'
-import Vuex from 'vuex'
 import debounce from 'lodash/debounce'
 
 import CollectionListItem from '../components/CollectionListItem'
-import { CollectionStoreModule } from '../collectionstore'
 import Avatar from 'nextcloud-vue/dist/Components/Avatar'
 import Multiselect from 'nextcloud-vue/dist/Components/Multiselect'
-Vue.use(Vuex)
 
-const store = new Vuex.Store(CollectionStoreModule)
+import { state, actions } from '../collectionstore'
 
 const METHOD_CREATE_COLLECTION = 0
 const METHOD_ADD_TO_COLLECTION = 1
@@ -77,7 +73,7 @@ const METHOD_HINT = 2
 const _debouncedSearch = debounce(
 	function(query) {
 		if (query !== '') {
-			this.collectionStore.dispatch('search', query).then((collections) => {
+			actions.search(query).then((collections) => {
 				this.searchCollections = collections
 			}).catch(e => {
 				console.error('Failed to search for collections', e)
@@ -89,7 +85,6 @@ const _debouncedSearch = debounce(
 
 export default {
 	name: 'CollectionList',
-	store,
 	components: {
 		CollectionListItem,
 		Avatar: Avatar,
@@ -127,12 +122,14 @@ export default {
 			model: {},
 			searchCollections: [],
 			error: null,
-			collectionStore: store
+			state: state
 		}
 	},
 	computed: {
 		collections() {
-			return this.collectionStore.getters.collectionsByResource(this.type, this.id)
+			return this.state.collections.filter((collection) => {
+				return typeof collection.resources.find((resource) => resource && resource.id === '' + this.id && resource.type === this.type) !== 'undefined'
+			})
 		},
 		placeholder() {
 			return t('core', 'Add to a project')
@@ -167,7 +164,7 @@ export default {
 		}
 	},
 	mounted() {
-		this.collectionStore.dispatch('fetchCollectionsByResource', {
+		actions.fetchCollectionsByResource({
 			resourceType: this.type,
 			resourceId: this.id
 		})
@@ -176,7 +173,7 @@ export default {
 		select(selectedOption, id) {
 			if (selectedOption.method === METHOD_CREATE_COLLECTION) {
 				selectedOption.action().then((id) => {
-					this.collectionStore.dispatch('createCollection', {
+					actions.createCollection({
 						baseResourceType: this.type,
 						baseResourceId: this.id,
 						resourceType: selectedOption.type,
@@ -191,7 +188,7 @@ export default {
 			}
 
 			if (selectedOption.method === METHOD_ADD_TO_COLLECTION) {
-				this.collectionStore.dispatch('addResourceToCollection', {
+				actions.addResourceToCollection({
 					collectionId: selectedOption.collectionId, resourceType: this.type, resourceId: this.id
 				}).catch((e) => {
 					this.setError(t('core', 'Failed to add the item to the project'), e)
