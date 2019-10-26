@@ -19,13 +19,13 @@ export default {
 			'vue',
 			'vuex',
 			'axios',
-			'nextcloud-vue',
-			'nextcloud-axios'
+			'@nextcloud/vue',
+			'@nextcloud/axios'
 		]
 		if (externals.includes(id)) {
 			return true
 		}
-		return /nextcloud-vue\/dist/.test(id)
+		return /\@nextcloud\/vue\/dist/.test(id)
 	},
 	output: {
 		file: 'dist/nextcloud-vue-collections.js',

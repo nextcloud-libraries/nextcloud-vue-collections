@@ -61,8 +61,8 @@
 import debounce from 'lodash/debounce'
 
 import CollectionListItem from '../components/CollectionListItem'
-import Avatar from 'nextcloud-vue/dist/Components/Avatar'
-import Multiselect from 'nextcloud-vue/dist/Components/Multiselect'
+import Avatar from '@nextcloud/vue/dist/Components/Avatar'
+import Multiselect from '@nextcloud/vue/dist/Components/Multiselect'
 
 import { state, actions } from '../collectionstore'
 
