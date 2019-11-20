@@ -277,7 +277,8 @@ export default {
 		height: 32px;
 		margin: 0;
 		padding: 8px;
-		background-color: var(--color-primary);
+		background-color: var(--color-text-maxcontrast);
+		margin-top: 30px;
 	}
 
 	/** TODO provide white icon in core */
