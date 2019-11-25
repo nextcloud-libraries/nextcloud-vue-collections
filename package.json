@@ -73,7 +73,7 @@
 		"rollup-plugin-scss": "^1.0.0",
 		"rollup-plugin-terser": "^5.0.0",
 		"rollup-plugin-vue": "^5.1.4",
-		"stylelint": "^11.0.0",
+		"stylelint": "^12.0.0",
 		"stylelint-config-recommended-scss": "^4.1.0",
 		"stylelint-scss": "^3.13.0",
 		"vue-template-compiler": "^2.5.21"
