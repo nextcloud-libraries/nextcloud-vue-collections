@@ -222,8 +222,11 @@ export default {
 <style lang="scss" scoped>
 	.collection-list > li {
 		display: flex;
-		align-items: center;
-		height: 44px;
+		align-items: start;
+
+		& > .avatar {
+			margin-top: 5px;
+		}
 	}
 	#collection-select-container {
 		display: flex;
