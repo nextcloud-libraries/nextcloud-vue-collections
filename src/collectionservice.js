@@ -72,7 +72,7 @@ class CollectionService {
 	}
 
 	removeResource(collectionId, resourceType, resourceId) {
-		return this.http.delete(`${this.baseUrl}/collections/${collectionId}`, { params: { resourceType, resourceId } })
+		return this.http.delete(`${this.baseUrl}collections/${collectionId}`, { params: { resourceType, resourceId } })
 			.then((response) => {
 				return response.data.ocs.data
 			})
