@@ -36,7 +36,7 @@
 	"dependencies": {
 		"@nextcloud/axios": "^1.1.0",
 		"@nextcloud/browserslist-config": "^1.0.0",
-		"@nextcloud/router": "^0.1.0",
+		"@nextcloud/router": "^1.0.0",
 		"@nextcloud/vue": "^1.2.2",
 		"lodash": "^4.17.11",
 		"vue": "^2.6.11"
