@@ -76,7 +76,7 @@
 		"rollup-plugin-vue": "^5.1.6",
 		"stylelint": "^13.3.3",
 		"stylelint-config-recommended-scss": "^4.2.0",
-		"stylelint-scss": "^3.17.0",
+		"stylelint-scss": "^3.17.1",
 		"vue-template-compiler": "^2.6.11"
 	},
 	"jest": {
