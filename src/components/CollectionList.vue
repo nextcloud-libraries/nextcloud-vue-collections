@@ -94,21 +94,21 @@ export default {
 		/**
 		 * Resource type identifier
 		 */
-		'type': {
+		type: {
 			type: String,
 			default: null
 		},
 		/**
 		 * Unique id of the resource
 		 */
-		'id': {
+		id: {
 			type: String,
 			default: null
 		},
 		/**
 		 * Name of the resource
 		 */
-		'name': {
+		name: {
 			type: String,
 			default: ''
 		}
@@ -135,7 +135,7 @@ export default {
 			return t('core', 'Add to a project')
 		},
 		options() {
-			let options = []
+			const options = []
 			window.OCP.Collaboration.getTypes().sort().forEach((type) => {
 				options.push({
 					method: METHOD_CREATE_COLLECTION,
@@ -145,7 +145,7 @@ export default {
 					action: () => window.OCP.Collaboration.trigger(type)
 				})
 			})
-			for (let index in this.searchCollections) {
+			for (const index in this.searchCollections) {
 				if (this.collections.findIndex((collection) => collection.id === this.searchCollections[index].id) === -1) {
 					options.push({
 						method: METHOD_ADD_TO_COLLECTION,
