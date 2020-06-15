@@ -38,7 +38,7 @@ const mutations = {
 		Vue.set(state, 'collections', state.collections.filter(item => item.id !== collectionId))
 	},
 	updateCollection(collection) {
-		let index = state.collections.findIndex((_item) => _item.id === collection.id)
+		const index = state.collections.findIndex((_item) => _item.id === collection.id)
 		if (index !== -1) {
 			Vue.set(state.collections, index, collection)
 		} else {
