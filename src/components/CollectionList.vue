@@ -24,7 +24,7 @@
 	<ul v-if="collections && type && id" id="collection-list" class="collection-list">
 		<li @click="showSelect">
 			<div class="avatar">
-				<span class="icon-projects icon-white" />
+				<span class="icon-projects" />
 			</div>
 			<div id="collection-select-container">
 				<Multiselect ref="select" v-model="value" :options="options"
@@ -220,6 +220,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+	.collection-list * {
+		box-sizing: border-box;
+	}
 	.collection-list > li {
 		display: flex;
 		align-items: start;
@@ -280,7 +283,7 @@ export default {
 		height: 32px;
 		margin: 0;
 		padding: 8px;
-		background-color: var(--color-text-maxcontrast);
+		background-color: var(--color-background-dark);
 		margin-top: 30px;
 	}
 
