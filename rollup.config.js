@@ -4,7 +4,6 @@ import localResolve from 'rollup-plugin-node-resolve'
 import scss from 'rollup-plugin-scss'
 import commonjs from 'rollup-plugin-commonjs'
 import json from 'rollup-plugin-json'
-import { eslint } from 'rollup-plugin-eslint'
 import alias from 'rollup-plugin-alias'
 import terser from 'rollup-plugin-terser'
 const path = require('path')
@@ -32,7 +31,6 @@ export default {
 		format: 'esm'
 	},
 	plugins: [
-		eslint(),
 		scss(),
 		vue({
 			css: true, // Dynamically inject css as a <style> tag
