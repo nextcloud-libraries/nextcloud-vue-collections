@@ -60,7 +60,7 @@
 		"eslint-plugin-vue": "^7.20.0",
 		"node-sass": "^7.0.1",
 		"prettier-eslint": "^13.0.0",
-		"resolve-url-loader": "^4.0.0",
+		"resolve-url-loader": "^5.0.0",
 		"rollup": "^2.67.2",
 		"rollup-plugin-alias": "^2.2.0",
 		"rollup-plugin-babel": "^4.4.0",
