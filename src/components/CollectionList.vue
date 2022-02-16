@@ -163,12 +163,29 @@ export default {
 			return options
 		}
 	},
+
 	mounted() {
 		actions.fetchCollectionsByResource({
 			resourceType: this.type,
 			resourceId: this.id
 		})
 	},
+
+	watch: {
+		type() {
+			actions.fetchCollectionsByResource({
+				resourceType: this.type,
+				resourceId: this.id
+			})
+		},
+		id() {
+			actions.fetchCollectionsByResource({
+				resourceType: this.type,
+				resourceId: this.id
+			})
+		}
+	},
+
 	methods: {
 		select(selectedOption, id) {
 			if (selectedOption.method === METHOD_CREATE_COLLECTION) {
