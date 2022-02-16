@@ -27,16 +27,14 @@ class CollectionService {
 
 	constructor() {
 		this.http = axios
-		this.baseUrl = generateOcsUrl('collaboration/resources', 2)
 	}
 
 	listCollection(collectionId) {
-		return this.http.get(`${this.baseUrl}collections/${collectionId}`)
+		return this.http.get(generateOcsUrl('collaboration/resources/collections/{collectionId}', { collectionId }))
 	}
 
 	renameCollection(collectionId, collectionName) {
-		const resourceBase = generateOcsUrl('collaboration/resources/collections', 2)
-		return this.http.put(`${resourceBase}${collectionId}?format=json`, {
+		return this.http.put(generateOcsUrl('collaboration/resources/collections/{collectionId}', { collectionId }), {
 			collectionName
 		}).then(result => {
 			return result.data.ocs.data
@@ -44,16 +42,14 @@ class CollectionService {
 	}
 
 	getCollectionsByResource(resourceType, resourceId) {
-		const resourceBase = generateOcsUrl(`collaboration/resources/${resourceType}`, 2)
-		return this.http.get(`${resourceBase}${resourceId}?format=json`)
+		return this.http.get(generateOcsUrl('collaboration/resources/{resourceType}/{resourceId}', { resourceType, resourceId }))
 			.then(result => {
 				return result.data.ocs.data
 			})
 	}
 
 	createCollection(resourceType, resourceId, name) {
-		const resourceBase = generateOcsUrl(`collaboration/resources/${resourceType}`, 2)
-		return this.http.post(`${resourceBase}${resourceId}?format=json`, {
+		return this.http.post(generateOcsUrl('collaboration/resources/{resourceType}/{resourceId}', { resourceType, resourceId }), {
 			name: name
 		})
 			.then((response) => {
@@ -63,8 +59,7 @@ class CollectionService {
 
 	addResource(collectionId, resourceType, resourceId) {
 		resourceId = '' + resourceId
-		const resourceBase = generateOcsUrl('collaboration/resources/collections', 2)
-		return this.http.post(`${resourceBase}${collectionId}?format=json`, {
+		return this.http.post(generateOcsUrl('collaboration/resources/collections/{collectionId}', { collectionId }), {
 			resourceType,
 			resourceId
 		}).then((response) => {
@@ -73,16 +68,14 @@ class CollectionService {
 	}
 
 	removeResource(collectionId, resourceType, resourceId) {
-		return this.http.delete(`${this.baseUrl}collections/${collectionId}`, { params: { resourceType, resourceId } })
+		return this.http.delete(generateOcsUrl('collaboration/resources/collections/{collectionId}', { collectionId }), { params: { resourceType, resourceId } })
 			.then((response) => {
 				return response.data.ocs.data
 			})
 	}
 
 	search(query) {
-		query = encodeURI(query)
-		const searchBase = generateOcsUrl('collaboration/resources/collections/search', 2)
-		return this.http.get(`${searchBase}${query}?format=json`)
+		return this.http.get(generateOcsUrl('collaboration/resources/collections/search/{query}', { query }))
 			.then((response) => {
 				return response.data.ocs.data
 			})
