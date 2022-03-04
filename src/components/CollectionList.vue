@@ -111,6 +111,10 @@ export default {
 		name: {
 			type: String,
 			default: ''
+		},
+		isActive: {
+			type: Boolean,
+			default: true
 		}
 	},
 	data() {
@@ -173,16 +177,28 @@ export default {
 
 	watch: {
 		type() {
-			actions.fetchCollectionsByResource({
-				resourceType: this.type,
-				resourceId: this.id
-			})
+			if (this.isActive) {
+				actions.fetchCollectionsByResource({
+					resourceType: this.type,
+					resourceId: this.id
+				})
+			}
 		},
 		id() {
-			actions.fetchCollectionsByResource({
-				resourceType: this.type,
-				resourceId: this.id
-			})
+			if (this.isActive) {
+				actions.fetchCollectionsByResource({
+					resourceType: this.type,
+					resourceId: this.id
+				})
+			}
+		},
+		isActive(isActive) {
+			if (isActive) {
+				actions.fetchCollectionsByResource({
+					resourceType: this.type,
+					resourceId: this.id
+				})
+			}
 		}
 	},
 
