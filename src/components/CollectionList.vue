@@ -168,13 +168,6 @@ export default {
 		}
 	},
 
-	mounted() {
-		actions.fetchCollectionsByResource({
-			resourceType: this.type,
-			resourceId: this.id
-		})
-	},
-
 	watch: {
 		type() {
 			if (this.isActive) {
@@ -200,6 +193,13 @@ export default {
 				})
 			}
 		}
+	},
+
+	mounted() {
+		actions.fetchCollectionsByResource({
+			resourceType: this.type,
+			resourceId: this.id
+		})
 	},
 
 	methods: {
