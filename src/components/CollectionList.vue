@@ -111,6 +111,10 @@ export default {
 		name: {
 			type: String,
 			default: ''
+		},
+		isActive: {
+			type: Boolean,
+			default: true
 		}
 	},
 	data() {
@@ -163,12 +167,41 @@ export default {
 			return options
 		}
 	},
+
+	watch: {
+		type() {
+			if (this.isActive) {
+				actions.fetchCollectionsByResource({
+					resourceType: this.type,
+					resourceId: this.id
+				})
+			}
+		},
+		id() {
+			if (this.isActive) {
+				actions.fetchCollectionsByResource({
+					resourceType: this.type,
+					resourceId: this.id
+				})
+			}
+		},
+		isActive(isActive) {
+			if (isActive) {
+				actions.fetchCollectionsByResource({
+					resourceType: this.type,
+					resourceId: this.id
+				})
+			}
+		}
+	},
+
 	mounted() {
 		actions.fetchCollectionsByResource({
 			resourceType: this.type,
 			resourceId: this.id
 		})
 	},
+
 	methods: {
 		select(selectedOption, id) {
 			if (selectedOption.method === METHOD_CREATE_COLLECTION) {
