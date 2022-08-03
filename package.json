@@ -59,7 +59,7 @@
 		"eslint-plugin-standard": "^5.0.0",
 		"eslint-plugin-vue": "^7.20.0",
 		"node-sass": "^7.0.1",
-		"prettier-eslint": "^13.0.0",
+		"prettier-eslint": "^15.0.1",
 		"resolve-url-loader": "^5.0.0",
 		"rollup": "^2.77.2",
 		"rollup-plugin-alias": "^2.2.0",
