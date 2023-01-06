@@ -30,14 +30,14 @@
 		"dist"
 	],
 	"peerDependencies": {
-		"@nextcloud/vue": "^3.10.2",
+		"@nextcloud/vue": "^7.3.0",
 		"vue": "^2.6.14"
 	},
 	"dependencies": {
 		"@nextcloud/axios": "^1.10.0",
 		"@nextcloud/browserslist-config": "^2.3.0",
 		"@nextcloud/router": "^2.0.1",
-		"@nextcloud/vue": "^3.10.2",
+		"@nextcloud/vue": "^7.3.0",
 		"@vue/compiler-sfc": "^3.2.45",
 		"lodash": "^4.17.21",
 		"vue": "^2.6.14"
