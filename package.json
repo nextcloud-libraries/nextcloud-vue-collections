@@ -31,7 +31,7 @@
 	],
 	"peerDependencies": {
 		"@nextcloud/vue": "^3.10.2",
-		"vue": "^2.6.14"
+		"vue": "^2.7.14"
 	},
 	"dependencies": {
 		"@nextcloud/axios": "^1.10.0",
@@ -40,7 +40,7 @@
 		"@nextcloud/vue": "^3.10.2",
 		"@vue/compiler-sfc": "^3.2.47",
 		"lodash": "^4.17.21",
-		"vue": "^2.6.14"
+		"vue": "^2.7.14"
 	},
 	"engines": {
 		"node": ">=10.0.0"
@@ -78,7 +78,7 @@
 		"stylelint": "^13.13.1",
 		"stylelint-config-recommended-scss": "^4.3.0",
 		"stylelint-scss": "^3.21.0",
-		"vue-template-compiler": "^2.6.14"
+		"vue-template-compiler": "^2.7.14"
 	},
 	"jest": {
 		"moduleFileExtensions": [
