@@ -27,10 +27,17 @@
 				<span class="icon-projects" />
 			</div>
 			<div id="collection-select-container">
-				<Multiselect ref="select" v-model="value" :options="options"
-					:placeholder="placeholder" tag-placeholder="Create a new project" label="title"
-					track-by="title" :reset-after="true" :limit="5"
-					@select="select" @search-change="search">
+				<NcMultiselect ref="select"
+					v-model="value"
+					:options="options"
+					:placeholder="placeholder"
+					tag-placeholder="Create a new project"
+					label="title"
+					track-by="title"
+					:reset-after="true"
+					:limit="5"
+					@select="select"
+					@search-change="search">
 					<template slot="singleLabel" slot-scope="props">
 						<span class="option__desc">
 							<span class="option__title">{{ props.option.title }}</span>
@@ -39,14 +46,14 @@
 					<template slot="option" slot-scope="props">
 						<span class="option__wrapper">
 							<span v-if="props.option.class" :class="props.option.class" class="avatar" />
-							<Avatar v-else-if="props.option.method !== 2" :display-name="props.option.title" :allow-placeholder="true" />
+							<NcAvatar v-else-if="props.option.method !== 2" :display-name="props.option.title" :allow-placeholder="true" />
 							<span class="option__title">{{ props.option.title }}</span>
 						</span>
 					</template>
-				</Multiselect>
-				<p class="hint">
-					{{ t('core', 'Connect items to a project to make them easier to find') }}
-				</p>
+					<p class="hint">
+						{{ t('core', 'Connect items to a project to make them easier to find') }}
+					</p>
+				</NcMultiselect>
 			</div>
 		</li>
 		<transition name="fade">
@@ -58,13 +65,12 @@
 	</ul>
 </template>
 <script>
-import debounce from 'lodash/debounce'
+import debounce from 'lodash-es/debounce.js'
 
-import CollectionListItem from '../components/CollectionListItem'
-import Avatar from '@nextcloud/vue/dist/Components/Avatar'
-import Multiselect from '@nextcloud/vue/dist/Components/Multiselect'
+import CollectionListItem from '../components/CollectionListItem.vue'
+import { NcAvatar, NcMultiselect } from '@nextcloud/vue'
 
-import { state, actions } from '../collectionstore'
+import { state, actions } from '../collectionstore.js'
 
 const METHOD_CREATE_COLLECTION = 0
 const METHOD_ADD_TO_COLLECTION = 1
@@ -87,8 +93,8 @@ export default {
 	name: 'CollectionList',
 	components: {
 		CollectionListItem,
-		Avatar: Avatar,
-		Multiselect: Multiselect
+		NcAvatar,
+		NcMultiselect,
 	},
 	props: {
 		/**
@@ -96,26 +102,26 @@ export default {
 		 */
 		type: {
 			type: String,
-			default: null
+			default: null,
 		},
 		/**
 		 * Unique id of the resource
 		 */
 		id: {
 			type: String,
-			default: null
+			default: null,
 		},
 		/**
 		 * Name of the resource
 		 */
 		name: {
 			type: String,
-			default: ''
+			default: '',
 		},
 		isActive: {
 			type: Boolean,
-			default: true
-		}
+			default: true,
+		},
 	},
 	data() {
 		return {
@@ -126,7 +132,7 @@ export default {
 			model: {},
 			searchCollections: [],
 			error: null,
-			state: state
+			state,
 		}
 	},
 	computed: {
@@ -146,7 +152,7 @@ export default {
 					type,
 					title: window.OCP.Collaboration.getLabel(type),
 					class: window.OCP.Collaboration.getIcon(type),
-					action: () => window.OCP.Collaboration.trigger(type)
+					action: () => window.OCP.Collaboration.trigger(type),
 				})
 			})
 			for (const index in this.searchCollections) {
@@ -154,18 +160,18 @@ export default {
 					options.push({
 						method: METHOD_ADD_TO_COLLECTION,
 						title: this.searchCollections[index].name,
-						collectionId: this.searchCollections[index].id
+						collectionId: this.searchCollections[index].id,
 					})
 				}
 			}
 			if (this.searchCollections.length === 0) {
 				options.push({
 					method: METHOD_HINT,
-					title: t('core', 'Type to search for existing projects')
+					title: t('core', 'Type to search for existing projects'),
 				})
 			}
 			return options
-		}
+		},
 	},
 
 	watch: {
@@ -173,7 +179,7 @@ export default {
 			if (this.isActive) {
 				actions.fetchCollectionsByResource({
 					resourceType: this.type,
-					resourceId: this.id
+					resourceId: this.id,
 				})
 			}
 		},
@@ -181,7 +187,7 @@ export default {
 			if (this.isActive) {
 				actions.fetchCollectionsByResource({
 					resourceType: this.type,
-					resourceId: this.id
+					resourceId: this.id,
 				})
 			}
 		},
@@ -189,16 +195,16 @@ export default {
 			if (isActive) {
 				actions.fetchCollectionsByResource({
 					resourceType: this.type,
-					resourceId: this.id
+					resourceId: this.id,
 				})
 			}
-		}
+		},
 	},
 
 	mounted() {
 		actions.fetchCollectionsByResource({
 			resourceType: this.type,
-			resourceId: this.id
+			resourceId: this.id,
 		})
 	},
 
@@ -211,7 +217,7 @@ export default {
 						baseResourceId: this.id,
 						resourceType: selectedOption.type,
 						resourceId: id,
-						name: this.name
+						name: this.name,
 					}).catch((e) => {
 						this.setError(t('core', 'Failed to create a project'), e)
 					})
@@ -222,7 +228,7 @@ export default {
 
 			if (selectedOption.method === METHOD_ADD_TO_COLLECTION) {
 				actions.addResourceToCollection({
-					collectionId: selectedOption.collectionId, resourceType: this.type, resourceId: this.id
+					collectionId: selectedOption.collectionId, resourceType: this.type, resourceId: this.id,
 				}).catch((e) => {
 					this.setError(t('core', 'Failed to add the item to the project'), e)
 				})
@@ -247,8 +253,8 @@ export default {
 			setTimeout(() => {
 				this.error = null
 			}, 5000)
-		}
-	}
+		},
+	},
 }
 </script>
 
@@ -285,7 +291,7 @@ export default {
 				background-color: transparent;
 			}
 		}
-		// avatar in the dropdown
+		// NcAvatar in the dropdown
 		span.avatar {
 			display: block;
 			padding: 16px;
