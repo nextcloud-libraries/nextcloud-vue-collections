@@ -20,31 +20,31 @@
  *
  */
 
-import Vue from 'vue'
-import service from './collectionservice'
+import Vue, { set } from 'vue'
+import service from './collectionservice.js'
 
 const state = Vue.observable({
-	collections: []
+	collections: [],
 })
 
 const mutations = {
 	addCollections(collections) {
-		Vue.set(state, 'collections', collections)
+		set(state, 'collections', collections)
 	},
 	addCollection(collection) {
 		state.collections.push(collection)
 	},
 	removeCollection(collectionId) {
-		Vue.set(state, 'collections', state.collections.filter(item => item.id !== collectionId))
+		set(state, 'collections', state.collections.filter(item => item.id !== collectionId))
 	},
 	updateCollection(collection) {
 		const index = state.collections.findIndex((_item) => _item.id === collection.id)
 		if (index !== -1) {
-			Vue.set(state.collections, index, collection)
+			set(state.collections, index, collection)
 		} else {
 			state.collections.push(collection)
 		}
-	}
+	},
 }
 
 const actions = {
@@ -60,7 +60,7 @@ const actions = {
 			actions.addResourceToCollection({
 				collectionId: collection.id,
 				resourceType,
-				resourceId
+				resourceId,
 			})
 		})
 	},
@@ -87,13 +87,13 @@ const actions = {
 	},
 	search(query) {
 		return service.search(query)
-	}
+	},
 
 }
 
 const store = {
 	actions,
-	state
+	state,
 }
 export default store
 export { actions, state }

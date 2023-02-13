@@ -23,32 +23,37 @@
 
 <template>
 	<li class="collection-list-item">
-		<Avatar :display-name="collection.name" :allow-placeholder="true" class="collection-avatar" />
-		<span v-if="newName === null" class="collection-item-name" title=""
+		<NcAvatar :display-name="collection.name" :allow-placeholder="true" class="collection-avatar" />
+		<span v-if="newName === null"
+			class="collection-item-name"
+			title=""
 			@click="showDetails">{{ collection.name }}</span>
 		<form v-else :class="{'shouldshake': error.rename }" @submit.prevent="renameCollection">
-			<input v-model="newName" type="text" autocomplete="off"
+			<input v-model="newName"
+				type="text"
+				autocomplete="off"
 				autocapitalize="off">
 			<input type="submit" value="" class="icon-confirm">
 		</form>
 		<div v-if="!detailsOpen && newName === null" class="linked-icons">
-			<a v-for="resource in limitedResources(collection)" :key="resource.type + '|' + resource.id" v-tooltip="resource.name"
-				:href="resource.link" :class="typeClass(resource)"><img :src="iconUrl(resource)"></a>
+			<a v-for="resource in limitedResources(collection)"
+				:key="resource.type + '|' + resource.id"
+				:title="resource.name"
+				:href="resource.link"
+				:class="typeClass(resource)"><img :src="iconUrl(resource)"></a>
 		</div>
 
 		<span v-if="newName === null" class="sharingOptionsGroup">
-			<Actions>
-				<ActionButton
-					icon="icon-info"
+			<NcActions>
+				<NcActionButton icon="icon-info"
 					@click.prevent="toggleDetails">
 					{{ detailsOpen ? t('core', 'Hide details') : t('core', 'Show details') }}
-				</ActionButton>
-				<ActionButton
-					icon="icon-rename"
+				</NcActionButton>
+				<NcActionButton icon="icon-rename"
 					@click.prevent="openRename">
 					{{ t('core', 'Rename project') }}
-				</ActionButton>
-			</Actions>
+				</NcActionButton>
+			</NcActions>
 		</span>
 
 		<transition name="fade">
@@ -68,34 +73,29 @@
 </template>
 
 <script>
-import Actions from '@nextcloud/vue/dist/Components/Actions'
-import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
-import Avatar from '@nextcloud/vue/dist/Components/Avatar'
-import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
+import { set } from 'vue'
+import { NcActions, NcActionButton, NcAvatar } from '@nextcloud/vue'
 
-import { actions } from '../collectionstore'
-
-Tooltip.options.defaultHtml = false
+import { actions } from '../collectionstore.js'
 
 export default {
 	name: 'CollectionListItem',
 	components: {
-		Avatar,
-		Actions,
-		ActionButton
+		NcAvatar,
+		NcActions,
+		NcActionButton,
 	},
-	directives: { Tooltip },
 	props: {
 		collection: {
 			type: Object,
-			default: null
-		}
+			default: null,
+		},
 	},
 	data() {
 		return {
 			detailsOpen: false,
 			newName: null,
-			error: {}
+			error: {},
 		}
 	},
 	computed: {
@@ -118,7 +118,7 @@ export default {
 				}
 				return ''
 			}
-		}
+		},
 	},
 	methods: {
 		toggleDetails() {
@@ -132,7 +132,7 @@ export default {
 		},
 		removeResource(collection, resource) {
 			actions.removeResource({
-				collectionId: collection.id, resourceType: resource.type, resourceId: resource.id
+				collectionId: collection.id, resourceType: resource.type, resourceId: resource.id,
 			})
 		},
 		openRename() {
@@ -145,18 +145,18 @@ export default {
 			}
 			actions.renameCollection({
 				collectionId: this.collection.id,
-				name: this.newName
+				name: this.newName,
 			}).then((collection) => {
 				this.newName = null
 			}).catch((e) => {
 				this.$set(this.error, 'rename', t('core', 'Failed to rename the project'))
 				console.error(e)
 				setTimeout(() => {
-					Vue.set(this.error, 'rename', null)
+					set(this.error, 'rename', null)
 				}, 3000)
 			})
-		}
-	}
+		},
+	},
 }
 </script>
 

@@ -35,7 +35,7 @@ class CollectionService {
 
 	renameCollection(collectionId, collectionName) {
 		return this.http.put(generateOcsUrl('collaboration/resources/collections/{collectionId}', { collectionId }), {
-			collectionName
+			collectionName,
 		}).then(result => {
 			return result.data.ocs.data
 		})
@@ -50,7 +50,7 @@ class CollectionService {
 
 	createCollection(resourceType, resourceId, name) {
 		return this.http.post(generateOcsUrl('collaboration/resources/{resourceType}/{resourceId}', { resourceType, resourceId }), {
-			name: name
+			name,
 		})
 			.then((response) => {
 				return response.data.ocs.data
@@ -61,7 +61,7 @@ class CollectionService {
 		resourceId = '' + resourceId
 		return this.http.post(generateOcsUrl('collaboration/resources/collections/{collectionId}', { collectionId }), {
 			resourceType,
-			resourceId
+			resourceId,
 		}).then((response) => {
 			return response.data.ocs.data
 		})
