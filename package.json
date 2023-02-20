@@ -31,12 +31,12 @@
 		"dist"
 	],
 	"peerDependencies": {
-		"@nextcloud/vue": "^7.5.0"
+		"@nextcloud/vue": "^7.6.0"
 	},
 	"dependencies": {
 		"@nextcloud/axios": "^2.3.0",
 		"@nextcloud/router": "^2.0.1",
-		"@nextcloud/vue": "^7.5.0",
+		"@nextcloud/vue": "^7.6.0",
 		"lodash-es": "^4.17.21",
 		"vue": "^2.7.14"
 	},
