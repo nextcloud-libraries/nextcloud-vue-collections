@@ -63,7 +63,7 @@
 		"eslint-plugin-vue": "^9.9.0",
 		"prettier-eslint": "^15.0.1",
 		"resolve-url-loader": "^5.0.0",
-		"sass": "^1.59.2",
+		"sass": "^1.59.3",
 		"stylelint": "^15.3.0",
 		"stylelint-config-recommended-scss": "^9.0.1",
 		"stylelint-scss": "^4.4.0",
