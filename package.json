@@ -24,21 +24,27 @@
 		"test:coverage": "jest --coverage"
 	},
 	"main": "dist/index.js",
-	"library": "dist/index.js",
+	"module": "dist/index.mjs",
+	"exports": {
+		".": {
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.js",
+			"default": "./dist/index.js"
+		}
+	},
 	"files": [
 		"LICENSE",
 		"README.md",
 		"dist"
 	],
 	"peerDependencies": {
-		"@nextcloud/vue": "^7.10.0"
+		"vue": "^2.7.14"
 	},
 	"dependencies": {
 		"@nextcloud/axios": "^2.3.0",
 		"@nextcloud/router": "^2.1.1",
 		"@nextcloud/vue": "^7.10.0",
-		"lodash-es": "^4.17.21",
-		"vue": "^2.7.14"
+		"lodash-es": "^4.17.21"
 	},
 	"engines": {
 		"node": "^16.0.0",
