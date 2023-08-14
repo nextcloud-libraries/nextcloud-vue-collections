@@ -43,7 +43,7 @@
   "dependencies": {
     "@nextcloud/axios": "^2.4.0",
     "@nextcloud/router": "^2.1.2",
-    "@nextcloud/vue": "^7.12.1",
+    "@nextcloud/vue": "^7.12.2",
     "lodash-es": "^4.17.21"
   },
   "engines": {
