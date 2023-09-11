@@ -51,7 +51,7 @@
     "npm": "^9.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.22.11",
+    "@babel/core": "^7.22.17",
     "@babel/plugin-transform-arrow-functions": "^7.22.5",
     "@babel/preset-env": "^7.22.14",
     "@nextcloud/browserslist-config": "^2.3.0",
