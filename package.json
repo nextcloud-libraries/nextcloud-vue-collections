@@ -71,7 +71,7 @@
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.68.0",
     "stylelint": "^15.10.3",
-    "stylelint-config-recommended-scss": "^11.0.0",
+    "stylelint-config-recommended-scss": "^13.0.0",
     "stylelint-scss": "^4.6.0",
     "vite": "^4.4.9",
     "vite-plugin-css-injected-by-js": "^3.3.0",
