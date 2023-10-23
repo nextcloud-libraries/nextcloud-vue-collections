@@ -70,7 +70,7 @@
     "prettier-eslint": "^16.1.1",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.69.4",
-    "stylelint": "^15.10.3",
+    "stylelint": "^15.11.0",
     "stylelint-config-recommended-scss": "^11.0.0",
     "stylelint-scss": "^5.2.1",
     "vite": "^4.5.0",
