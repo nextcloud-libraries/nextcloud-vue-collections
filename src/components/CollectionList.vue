@@ -27,33 +27,33 @@
 				<span class="icon-projects" />
 			</div>
 			<div id="collection-select-container">
-				<NcMultiselect ref="select"
+				<NcSelect ref="select"
 					v-model="value"
+					:aria-label-combobox="t('core', 'Add to a project')"
 					:options="options"
 					:placeholder="placeholder"
-					tag-placeholder="Create a new project"
 					label="title"
-					track-by="title"
-					:reset-after="true"
 					:limit="5"
-					@select="select"
-					@search-change="search">
-					<template slot="singleLabel" slot-scope="props">
+					@close="isSelectOpen = false"
+					@open="isSelectOpen = true"
+					@option:selected="select"
+					@search="search">
+					<template #selected-option="option">
 						<span class="option__desc">
-							<span class="option__title">{{ props.option.title }}</span>
+							<span class="option__title">{{ option.title }}</span>
 						</span>
 					</template>
-					<template slot="option" slot-scope="props">
+					<template #option="option">
 						<span class="option__wrapper">
-							<span v-if="props.option.class" :class="props.option.class" class="avatar" />
-							<NcAvatar v-else-if="props.option.method !== 2" :display-name="props.option.title" :allow-placeholder="true" />
-							<span class="option__title">{{ props.option.title }}</span>
+							<span v-if="option.class" :class="option.class" class="avatar" />
+							<NcAvatar v-else-if="option.method !== 2" allow-placeholder :display-name="option.title" />
+							<span class="option__title">{{ option.title }}</span>
 						</span>
 					</template>
 					<p class="hint">
 						{{ t('core', 'Connect items to a project to make them easier to find') }}
 					</p>
-				</NcMultiselect>
+				</NcSelect>
 			</div>
 		</li>
 		<transition name="fade">
@@ -65,24 +65,26 @@
 	</ul>
 </template>
 <script>
+import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
+import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js'
 import debounce from 'lodash-es/debounce.js'
 
 import CollectionListItem from '../components/CollectionListItem.vue'
-import { NcAvatar, NcMultiselect } from '@nextcloud/vue'
-
 import { state, actions } from '../collectionstore.js'
 
 const METHOD_CREATE_COLLECTION = 0
 const METHOD_ADD_TO_COLLECTION = 1
-const METHOD_HINT = 2
 
 const _debouncedSearch = debounce(
-	function(query) {
+	function(query, loading) {
 		if (query !== '') {
+			loading(true)
 			actions.search(query).then((collections) => {
 				this.searchCollections = collections
 			}).catch(e => {
 				console.error('Failed to search for collections', e)
+			}).finally(() => {
+				loading(false)
 			})
 		}
 	},
@@ -94,7 +96,7 @@ export default {
 	components: {
 		CollectionListItem,
 		NcAvatar,
-		NcMultiselect,
+		NcSelect,
 	},
 	props: {
 		/**
@@ -133,6 +135,7 @@ export default {
 			searchCollections: [],
 			error: null,
 			state,
+			isSelectOpen: false,
 		}
 	},
 	computed: {
@@ -142,7 +145,7 @@ export default {
 			})
 		},
 		placeholder() {
-			return t('core', 'Add to a project')
+			return this.isSelectOpen ? t('core', 'Type to search for existing projects') : t('core', 'Add to a project')
 		},
 		options() {
 			const options = []
@@ -163,12 +166,6 @@ export default {
 						collectionId: this.searchCollections[index].id,
 					})
 				}
-			}
-			if (this.searchCollections.length === 0) {
-				options.push({
-					method: METHOD_HINT,
-					title: t('core', 'Type to search for existing projects'),
-				})
 			}
 			return options
 		},
@@ -234,8 +231,8 @@ export default {
 				})
 			}
 		},
-		search(query) {
-			_debouncedSearch.bind(this)(query)
+		search(query, loading) {
+			_debouncedSearch.bind(this)(query, loading)
 		},
 		showSelect() {
 			this.selectIsOpen = true
@@ -266,34 +263,19 @@ export default {
 	.collection-list > li {
 		display: flex;
 		align-items: start;
+		gap: 12px;
 
 		& > .avatar {
-			margin-top: 5px;
+			margin-top: auto;
 		}
 	}
 
 	#collection-select-container {
 		display: flex;
 		flex-direction: column;
-		margin-top: -5px;
 	}
 
-	.multiselect {
-		z-index: 2;
-		width: 100%;
-		margin-left: 3px;
-		background-color: transparent;
-		&:deep() {
-			&:not(.multiselect--active) .multiselect__tags {
-				border: none !important;
-				input::placeholder {
-					color: var(--color-main-text);
-				}
-			}
-			.multiselect__input {
-				background-color: transparent;
-			}
-		}
+	.v-select {
 		// NcAvatar in the dropdown
 		span.avatar {
 			display: block;
@@ -304,10 +286,6 @@ export default {
 			&:hover {
 				opacity: 1;
 			}
-		}
-		// hide text when opened multiselect
-		&.multiselect--active + p.hint {
-			opacity: 0;
 		}
 	}
 

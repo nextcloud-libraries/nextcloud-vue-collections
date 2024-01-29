@@ -23,7 +23,7 @@
 
 <template>
 	<li class="collection-list-item">
-		<NcAvatar :display-name="collection.name" :allow-placeholder="true" class="collection-avatar" />
+		<NcAvatar :display-name="collection.name" allow-placeholder class="collection-avatar" />
 		<span v-if="newName === null"
 			class="collection-item-name"
 			title=""
@@ -73,8 +73,10 @@
 </template>
 
 <script>
+import NcActions from '@nextcloud/vue/dist/Components/NcActions.js'
+import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js'
+import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
 import { set } from 'vue'
-import { NcActions, NcActionButton, NcAvatar } from '@nextcloud/vue'
 
 import { actions } from '../collectionstore.js'
 
@@ -209,9 +211,12 @@ export default {
 		.collection-item-name {
 			padding: 12px 9px;
 		}
-		input[type=text] {
+		input {
 			margin-top: 4px;
-			flex-grow: 1;
+			border-color: var(--color-border-maxcontrast);
+			&[type=text] {
+				flex-grow: 1;
+			}
 		}
 		.error {
 			flex-basis: 100%;
