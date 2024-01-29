@@ -53,7 +53,7 @@
   "devDependencies": {
     "@babel/core": "^7.23.9",
     "@babel/plugin-transform-arrow-functions": "^7.22.5",
-    "@babel/preset-env": "^7.23.8",
+    "@babel/preset-env": "^7.23.9",
     "@nextcloud/browserslist-config": "^2.3.0",
     "@nextcloud/eslint-config": "^8.3.0",
     "@vitejs/plugin-vue2": "^2.3.1",
