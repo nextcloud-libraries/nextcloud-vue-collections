@@ -1,6 +1,6 @@
 # Nextcloud Vue component for collaboration collections
 
-[![Build Status](https://img.shields.io/travis/juliushaertl/nextcloud-vue-collections.svg?style=flat-square)](https://travis-ci.org/juliushaertl/nextcloud-vue-collections) [![npm last version](https://img.shields.io/npm/v/nextcloud-vue-collections.svg?style=flat-square)](https://www.npmjs.com/package/nextcloud-vue-collections) [![Dependabot status](https://img.shields.io/badge/Dependabot-enabled-brightgreen.svg?longCache=true&style=flat-square&logo=dependabot)](https://dependabot.com) [![irc](https://img.shields.io/badge/IRC-%23nextcloud--dev%20on%20freenode-blue.svg?style=flat-square)](https://webchat.freenode.net/?channels=nextcloud-dev)
+[![npm last version](https://img.shields.io/npm/v/nextcloud-vue-collections.svg?style=flat-square)](https://www.npmjs.com/package/nextcloud-vue-collections) [![Dependabot status](https://img.shields.io/badge/Dependabot-enabled-brightgreen.svg?longCache=true&style=flat-square&logo=dependabot)](https://dependabot.com)
 
 Provides a vue component for Nextcloud projects introduced in Nextcloud 16 to be integrated in apps. *Projects* is naming for user-facing elements, while collections is used internally since it was renamed afterwards.
 
