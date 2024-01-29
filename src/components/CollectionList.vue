@@ -86,7 +86,7 @@ const _debouncedSearch = debounce(
 			})
 		}
 	},
-	500, {}
+	500, {},
 )
 
 export default {
@@ -262,6 +262,7 @@ export default {
 	.collection-list * {
 		box-sizing: border-box;
 	}
+
 	.collection-list > li {
 		display: flex;
 		align-items: start;
@@ -270,17 +271,19 @@ export default {
 			margin-top: 5px;
 		}
 	}
+
 	#collection-select-container {
 		display: flex;
 		flex-direction: column;
 		margin-top: -5px;
 	}
+
 	.multiselect {
 		z-index: 2;
 		width: 100%;
 		margin-left: 3px;
 		background-color: transparent;
-		&::v-deep {
+		&:deep() {
 			&:not(.multiselect--active) .multiselect__tags {
 				border: none !important;
 				input::placeholder {
@@ -348,6 +351,7 @@ export default {
 	.fade-enter-active, .fade-leave-active {
 		transition: opacity .5s;
 	}
+
 	.fade-enter, .fade-leave-to {
 		opacity: 0;
 	}
