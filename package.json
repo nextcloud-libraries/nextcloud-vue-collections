@@ -13,6 +13,7 @@
   "author": "Julius Härtl <jus@bitgrid.net>",
   "license": "AGPL-3.0",
   "scripts": {
+    "prepare": "vite build",
     "build": "vite build",
     "dev": "vite build --mode development",
     "watch": "vite build --mode development --watch",
@@ -43,7 +44,7 @@
   "dependencies": {
     "@nextcloud/axios": "^2.4.0",
     "@nextcloud/router": "^2.2.1",
-    "@nextcloud/vue": "^7.12.6",
+    "@nextcloud/vue": "^8.5.1",
     "lodash-es": "^4.17.21"
   },
   "engines": {
