@@ -20,10 +20,10 @@
  *
  */
 
-import Vue, { set } from 'vue'
+import { reactive, set } from 'vue'
 import service from './collectionservice.js'
 
-const state = Vue.observable({
+const state = reactive({
 	collections: [],
 })
 

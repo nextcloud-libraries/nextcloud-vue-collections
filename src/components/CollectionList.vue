@@ -125,6 +125,13 @@ export default {
 			default: true,
 		},
 	},
+
+	setup() {
+		return {
+			state,
+		}
+	},
+
 	data() {
 		return {
 			selectIsOpen: false,
@@ -134,10 +141,10 @@ export default {
 			model: {},
 			searchCollections: [],
 			error: null,
-			state,
 			isSelectOpen: false,
 		}
 	},
+
 	computed: {
 		collections() {
 			return this.state.collections.filter((collection) => {
