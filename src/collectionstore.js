@@ -20,7 +20,7 @@
  *
  */
 
-import { reactive, set } from 'vue'
+import { reactive } from 'vue'
 import service from './collectionservice.js'
 
 const state = reactive({
@@ -29,18 +29,18 @@ const state = reactive({
 
 const mutations = {
 	addCollections(collections) {
-		set(state, 'collections', collections)
+		state.collections = collections
 	},
 	addCollection(collection) {
 		state.collections.push(collection)
 	},
 	removeCollection(collectionId) {
-		set(state, 'collections', state.collections.filter(item => item.id !== collectionId))
+		state.collections = state.collections.filter(item => item.id !== collectionId)
 	},
 	updateCollection(collection) {
 		const index = state.collections.findIndex((_item) => _item.id === collection.id)
 		if (index !== -1) {
-			set(state.collections, index, collection)
+			state.collections[index] = collection
 		} else {
 			state.collections.push(collection)
 		}

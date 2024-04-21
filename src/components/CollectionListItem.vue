@@ -76,8 +76,6 @@
 import NcActions from '@nextcloud/vue/dist/Components/NcActions.js'
 import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js'
 import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
-import { set } from 'vue'
-
 import { actions } from '../collectionstore.js'
 
 export default {
@@ -151,10 +149,10 @@ export default {
 			}).then((collection) => {
 				this.newName = null
 			}).catch((e) => {
-				this.$set(this.error, 'rename', t('core', 'Failed to rename the project'))
+				this.error.rename = t('core', 'Failed to rename the project')
 				console.error(e)
 				setTimeout(() => {
-					set(this.error, 'rename', null)
+					this.error.rename = null
 				}, 3000)
 			})
 		},

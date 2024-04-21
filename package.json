@@ -39,7 +39,7 @@
     "dist"
   ],
   "peerDependencies": {
-    "vue": "3.4.23"
+    "vue": "^3.4.23"
   },
   "dependencies": {
     "@nextcloud/axios": "^2.4.0",
