@@ -53,16 +53,20 @@
   },
   "stylelint": {
     "extends": "@nextcloud/stylelint-config",
-    "ignoreFiles": ["**/*.js", "**/*.ts"]
+    "ignoreFiles": [
+      "**/*.js",
+      "**/*.ts"
+    ]
   },
   "eslintConfig": {
     "extends": "@nextcloud"
   },
   "devDependencies": {
     "@nextcloud/browserslist-config": "^3.0.1",
-    "@nextcloud/eslint-config": "^8.3.0",
+    "@nextcloud/eslint-config": "^8.4.1",
     "@nextcloud/stylelint-config": "^2.4.0",
     "@nextcloud/vite-config": "^1.2.3",
+    "@vue/eslint-config-typescript": "^13.0.0",
     "eslint": "^8.57.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.29.1",
