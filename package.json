@@ -11,7 +11,7 @@
   "homepage": "https://github.com/nextcloud/nextcloud-vue-collections",
   "bugs": "https://github.com/nextcloud/nextcloud-vue-collections/issues",
   "author": "Julius Härtl <jus@bitgrid.net>",
-  "license": "AGPL-3.0",
+  "license": "AGPL-3.0-or-later",
   "scripts": {
     "prepare": "vite build",
     "build": "vite build",

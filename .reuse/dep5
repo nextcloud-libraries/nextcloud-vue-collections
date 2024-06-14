@@ -1,0 +1,8 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Nextcloud Vue component for collaboration collections
+Upstream-Contact: Nextcloud GmbH <https://nextcloud.com/impressum/>
+Source: https://github.com/nextcloud-libraries/nextcloud-vue-collections
+
+Files: package.json package-lock.json
+Copyright: Nextcloud GmbH and Nextcloud contributors
+License: AGPL-3.0-or-later
