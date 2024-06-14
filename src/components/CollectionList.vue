@@ -65,6 +65,7 @@
 	</ul>
 </template>
 <script>
+import { t } from '@nextcloud/l10n'
 import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
 import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js'
 import debounce from 'lodash-es/debounce.js'
@@ -213,6 +214,7 @@ export default {
 	},
 
 	methods: {
+		t,
 		select(selectedOption, id) {
 			if (selectedOption.method === METHOD_CREATE_COLLECTION) {
 				selectedOption.action().then((id) => {

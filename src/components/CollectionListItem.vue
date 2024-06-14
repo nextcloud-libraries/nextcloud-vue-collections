@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import { t } from '@nextcloud/l10n'
 import NcActions from '@nextcloud/vue/dist/Components/NcActions.js'
 import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js'
 import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
@@ -123,6 +124,7 @@ export default {
 		},
 	},
 	methods: {
+		t,
 		toggleDetails() {
 			this.detailsOpen = !this.detailsOpen
 		},
