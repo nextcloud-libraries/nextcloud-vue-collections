@@ -6,6 +6,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.0-alpha - 2024-06-17
+### Breaking changes
+The package now uses Vue 3 instead of Vue 2.7. For older versions of Vue please use `0.x` released version
+
+### Changed
+* migrate package to Vue 3
+* chore: Add NPM publish workflow
+
 ## 0.13.0 - 2024-06-16
 ### Changed
 * chore: use vue 2.7 reactive function
