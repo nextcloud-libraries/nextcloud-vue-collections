@@ -20,7 +20,8 @@ npm install --save nextcloud-vue-collections
 
 This library requires your app to have the following dependencies installed:
 
-- vue 2.7.16
+- `^1.0.0` or any compatible newer version: `vue ^3.4.29`
+- `^0.12.0` or any compatible newer minor or patch version: `vue ^2.7.16`
 
 After that you can use the collection list component like this:
 
