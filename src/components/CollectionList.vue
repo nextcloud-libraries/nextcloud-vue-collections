@@ -198,7 +198,7 @@ export default {
 
 	methods: {
 		t,
-		select(selectedOption, id) {
+		select(selectedOption) {
 			if (selectedOption.method === METHOD_CREATE_COLLECTION) {
 				selectedOption.action().then((id) => {
 					actions.createCollection({

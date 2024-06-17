@@ -1,6 +1,6 @@
 {
   "name": "nextcloud-vue-collections",
-  "version": "0.13.0",
+  "version": "1.0.0-alpha",
   "description": "Nextcloud vue components for collections",
   "keywords": [
     "vuejs",
@@ -39,13 +39,13 @@
     "dist"
   ],
   "peerDependencies": {
-    "vue": "^2.7.16"
+    "vue": "^3.4.29"
   },
   "dependencies": {
     "@nextcloud/axios": "^2.5.0",
     "@nextcloud/l10n": "^3.1.0",
     "@nextcloud/router": "^3.0.1",
-    "@nextcloud/vue": "^8.12.0",
+    "@nextcloud/vue": "^9.0.0-alpha.3",
     "lodash-es": "^4.17.21"
   },
   "engines": {
@@ -60,27 +60,19 @@
     ]
   },
   "eslintConfig": {
-    "extends": "@nextcloud"
+    "extends": "@nextcloud/eslint-config/vue3"
   },
   "devDependencies": {
     "@nextcloud/browserslist-config": "^3.0.1",
     "@nextcloud/eslint-config": "^8.4.1",
     "@nextcloud/stylelint-config": "^3.0.1",
-    "@nextcloud/vite-config": "^1.2.5",
+    "@nextcloud/vite-config": "^2.0.2",
     "@vue/eslint-config-typescript": "^13.0.0",
     "eslint": "^8.57.0",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-nextcloud": "^0.3.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.2.0",
-    "eslint-plugin-standard": "^5.0.0",
-    "eslint-plugin-vue": "^9.26.0",
     "prettier-eslint": "^16.3.0",
     "sass": "^1.77.5",
     "stylelint": "^16.6.1",
-    "vite": "^5.3.1",
-    "vue-template-compiler": "^2.7.16"
+    "vite": "^5.3.1"
   },
   "jest": {
     "moduleFileExtensions": [
