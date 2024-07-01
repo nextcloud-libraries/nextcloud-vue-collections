@@ -45,7 +45,7 @@
     "@nextcloud/axios": "^2.5.0",
     "@nextcloud/l10n": "^3.1.0",
     "@nextcloud/router": "^3.0.1",
-    "@nextcloud/vue": "^9.0.0-alpha.3",
+    "@nextcloud/vue": "^9.0.0-alpha.4",
     "lodash-es": "^4.17.21"
   },
   "engines": {
