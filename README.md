@@ -3,10 +3,16 @@
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
+# Deprecated
+
+**WARNING**: This package is now deprecated, the components have been merged into [`@nextcloud/vue`](https://www.npmjs.com/package/@nextcloud/vue) as of version 8.14.0.
+So we recommend to migrate to using `@nextcloud/vue` directly:
+```js
+import NcCollectionList from '@nextcloud/vue/dist/Components/NcCollectionList.js'
+```
+
+
 # Nextcloud Vue component for collaboration collections
-
-[![npm last version](https://img.shields.io/npm/v/nextcloud-vue-collections.svg?style=flat-square)](https://www.npmjs.com/package/nextcloud-vue-collections) [![Dependabot status](https://img.shields.io/badge/Dependabot-enabled-brightgreen.svg?longCache=true&style=flat-square&logo=dependabot)](https://dependabot.com)
-
 Provides a vue component for Nextcloud projects introduced in Nextcloud 16 to be integrated in apps. *Projects* is naming for user-facing elements, while collections is used internally since it was renamed afterwards.
 
 ## Installation
